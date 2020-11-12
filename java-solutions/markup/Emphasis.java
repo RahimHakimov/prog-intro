@@ -1,6 +1,6 @@
 package markup;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @author Rakhim Khakimov

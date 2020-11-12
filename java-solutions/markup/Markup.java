@@ -1,8 +1,5 @@
 package markup;
 
-import java.io.*;
-import java.util.*;
-
 /**
  * @author Rakhim Khakimov
  */
