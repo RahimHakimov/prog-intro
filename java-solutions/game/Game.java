@@ -1,5 +1,7 @@
 package game;
 
+import game.player.Player;
+
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */

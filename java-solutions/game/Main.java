@@ -1,5 +1,8 @@
 package game;
 
+import game.player.HumanPlayer;
+import game.player.SequentialPlayer;
+
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
