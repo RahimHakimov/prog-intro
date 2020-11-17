@@ -1,51 +1,57 @@
 package game;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 public class MNKBoard implements Board, Position {
-    int m, n, k;
-    int empty;
-    private static final Map<Cell, Character> SYMBOLS = Map.of(
-            Cell.X, 'X',
-            Cell.O, 'O',
-            Cell.E, '.'
-    );
+    private final Cell emptyCell = new Cell();
+    private Map<Cell, Character> SYMBOLS;
 
     private final Cell[][] cells;
-    private Cell turn;
+    private final int k;
+    private int notEmpty = 0;
+    private char turn;
 
-    public MNKBoard(int m, int n, int k) {
-        this.cells = new Cell[m][n];
-        this.m = m;
+    public MNKBoard(int n, int m, int k) {
+        this.cells = new Cell[n][m];
         this.k = k;
-        this.n = n;
-        empty = n * m;
-        for (Cell[] row : cells) {
-            Arrays.fill(row, Cell.E);
+        turn = 'X';
+        SYMBOLS = new HashMap<>();
+        SYMBOLS.put(new Cell('X'), 'X');
+        SYMBOLS.put(new Cell('O'), 'O');
+        SYMBOLS.put(emptyCell, '.');
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cells[i][j] = new Cell();
+            }
         }
-        turn = Cell.X;
-    }
-
-    public int getN() {
-        return n;
-    }
-
-    public int getM() {
-        return m;
     }
 
     @Override
     public Position getPosition() {
-        return this;
+        return new ProxyPosition(this);
     }
 
     @Override
     public Cell getCell() {
-        return turn;
+        return new Cell(turn);
+    }
+
+    private int NumberOfEquals(int r, int c, int i, int j) {
+        int cnt = 0;
+        while (r + i >= 0 && c + j >= 0
+                && r + i < cells.length
+                && c + j < cells[0].length
+                && cells[r + i][c + j].equals(new Cell(turn))
+                && cnt < getK()) {
+            cnt++;
+            r += i;
+            c += j;
+        }
+        return cnt;
     }
 
     @Override
@@ -53,101 +59,48 @@ public class MNKBoard implements Board, Position {
         if (!isValid(move)) {
             return Result.LOSE;
         }
-        cells[move.getRow()][move.getColumn()] = move.getValue();
-        empty--;
-        int inColumn = 0;
-        for (int i = move.getRow(); i < m; ++i) {
-            if (cells[i][move.getColumn()] == move.getValue()) {
-                inColumn++;
-            }else {
-                break;
-            } if (inColumn >= k) break;
-        }
-        for (int i = move.getRow() - 1; i > -1; --i) {
-            if (cells[i][move.getColumn()] == move.getValue()) {
-                inColumn++;
-            } else {
-                break;
-            }
-            if (inColumn >= k) break;
-        }
-        if (inColumn == k) {
+
+        int r = move.getRow(), c = move.getColumn();
+        cells[r][c] = move.getValue();
+
+        if (areWin(r, c, 0, 1) || areWin(r, c, 1, 0)
+                || areWin(r, c, 1, 1) || areWin(r, c, 1, -1)) {
             return Result.WIN;
         }
-        int inRow = 0;
-        for (int i = move.getColumn(); i < n; ++i) {
-            if (cells[move.getRow()][i] == move.getValue()) {
-                inRow++;
-            } else {
-                break;
-            }
-            if (inRow >= k) break;
-        }
-        for (int i = move.getColumn() - 1; i > -1; --i) {
-            if (cells[move.getRow()][i] == move.getValue()) {
-                inRow++;
-            } else {
-                break;
-            }
-            if (inRow >= k) break;
-        }
-        if (inRow == k) {
-            return Result.WIN;
-        }
-        int inDiag1 = 0;
-        for (int i = 0; i<=Math.min(move.getColumn(), move.getRow()); ++i) {
-            if (cells[move.getRow()-i][move.getColumn()-i] == move.getValue()) {
-                inDiag1++;
-            } else {
-                break;
-            }
-            if (inDiag1 >= k) break;
-        }
-        for (int i = 1; i<=Math.min(n-move.getColumn()-1, m-move.getRow()-1); ++i) {
-            if (cells[move.getRow()+i][move.getColumn()+i] == move.getValue()) {
-                inDiag1++;
-            } else {
-                break;
-            }
-            if (inDiag1 >= k) break;
-        }
-        if (inDiag1 == k) {
-            return Result.WIN;
-        }
-        int inDiag2 = 0;
-        for (int i = 0; i<=Math.min(move.getColumn(), m-move.getRow()-1); ++i) {
-            if (cells[move.getRow()+i][move.getColumn()-i] == move.getValue()) {
-                inDiag2++;
-            } else {
-                break;
-            }
-            if (inDiag2 >= k) break;
-        }
-        for (int i = 1; i<=Math.min(n-move.getColumn()-1, move.getRow()); ++i) {
-            if (cells[move.getRow()-i][move.getColumn()+i] == move.getValue()) {
-                inDiag2++;
-            } else {
-                break;
-            }
-            if (inDiag2 >= k) break;
-        }
-        if (inDiag2 == k) {
-            return Result.WIN;
-        }
-        if (empty == 0) {
+
+        if (++notEmpty == getN() * getM()) {
             return Result.DRAW;
         }
-        if (turn == Cell.X) turn = Cell.O;
-        else if (turn == Cell.O) turn = Cell.X;
+        if (turn == 'X') turn = 'O';
+        else turn = 'X';
         return Result.UNKNOWN;
+    }
+
+    private boolean areWin(int r, int c, int d1, int d2) {
+        return NumberOfEquals(r, c, d1, d2) + NumberOfEquals(r, c, -d1, -d2) + 1 >= k;
+    }
+
+    @Override
+    public int getN() {
+        return cells[0].length;
+    }
+
+    @Override
+    public int getM() {
+        return cells.length;
+    }
+
+    @Override
+    public int getK() {
+        return k;
     }
 
     @Override
     public boolean isValid(final Move move) {
-        return 0 <= move.getRow() && move.getRow() < m
-                && 0 <= move.getColumn() && move.getColumn() < n
-                && cells[move.getRow()][move.getColumn()] == Cell.E
-                && turn == getCell();
+        return 0 <= move.getRow() && move.getRow() < cells.length
+                && 0 <= move.getColumn() && move.getColumn() < cells[0].length
+                && cells[move.getRow()][move.getColumn()].equals(emptyCell)
+                && getCell().equals(new Cell(turn));
     }
 
     @Override
@@ -157,17 +110,24 @@ public class MNKBoard implements Board, Position {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder(" ");
-        for (int c = 0; c<n; ++c) {
-            sb.append(c);
+        int width = Math.max(
+                String.valueOf(cells[0].length).length(),
+                String.valueOf(cells.length).length()
+        );
+
+        final StringBuilder sb = new StringBuilder(" ".repeat(width + 1));
+
+        for (int c = 0; c < cells[0].length; c++) {
+            sb.append(c + 1).append(" ");
         }
-        for (int r = 0; r < m; r++) {
+        for (int r = 0; r < cells.length; r++) {
             sb.append("\n");
-            sb.append(r);
-            for (int c = 0; c < n; c++) {
-                sb.append(SYMBOLS.get(cells[r][c]));
+            sb.append(r + 1).append(" ");
+            for (int c = 0; c < cells[0].length; c++) {
+                sb.append(SYMBOLS.get(cells[r][c])).append(" ");
             }
         }
+
         return sb.toString();
     }
 }

@@ -1,5 +1,6 @@
 package game.player;
 
+import game.Board;
 import game.Cell;
 import game.Move;
 import game.Position;
@@ -10,6 +11,8 @@ import game.Position;
 public class SequentialPlayer implements Player {
     @Override
     public Move move(final Position position, final Cell cell) {
+        /*Board board = (Board) position;
+        board.makeMove(0, 0, cell);*/
         int m = position.getM();
         int n = position.getN();
         for (int r = 0; r < m; r++) {

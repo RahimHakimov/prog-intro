@@ -2,29 +2,29 @@ package game;
 
 import game.player.Player;
 
+import java.util.List;
+
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 public class Game {
     private final boolean log;
-    private final Player player1, player2;
+    private final List<Player> players;
 
-    public Game(final boolean log, final Player player1, final Player player2) {
+    public Game(final boolean log, final List<Player> players) {
         this.log = log;
-        this.player1 = player1;
-        this.player2 = player2;
+        this.players = players;
     }
 
     public int play(Board board) {
         while (true) {
-            final int result1 = move(board, player1, 1);
-            if (result1 != -1) {
-                return result1;
+            for (int i = 0; i < players.size(); i++) {
+                final int result = move(board, players.get(i), i);
+                if (result != -2) {
+                    return result;
+                }
             }
-            final int result2 = move(board, player2, 2);
-            if (result2 != -1) {
-                return result2;
-            }
+
         }
     }
 
@@ -38,12 +38,12 @@ public class Game {
             return no;
         } else if (result == Result.LOSE) {
             log("Player " + no + " lose");
-            return 3 - no;
+            return (no + 1) % players.size();
         } else if (result == Result.DRAW) {
             log("Draw");
-            return 0;
-        } else {
             return -1;
+        } else {
+            return -2;
         }
     }
 

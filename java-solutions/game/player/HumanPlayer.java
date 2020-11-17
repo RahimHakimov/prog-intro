@@ -30,13 +30,20 @@ public class HumanPlayer implements Player {
             out.println(position);
             out.println(cell + "'s move");
             out.println("Enter row and column");
-            final Move move = new Move(in.nextInt(), in.nextInt(), cell);
-            if (position.isValid(move)) {
-                return move;
+            Scanner in1 = new Scanner(in.nextLine());
+            while (!in1.hasNext()) {in1 = new Scanner(in.nextLine());}
+            int r = in1.nextInt();
+            while (!in1.hasNext()) {in1 = new Scanner(in.nextLine());}
+            int c = in1.nextInt();
+            final Move move = new Move(r-1, c-1, cell);
+            if (in1.hasNextInt()) {
+                out.println("Please, enter only two numbers!!!");
             }
-            /*final int row = move.getRow();
-            final int column = move.getColumn();*/
-            out.println("Move " + move + " is invalid");
+            else if (position.isValid(move)) {
+                return move;
+            } else {
+                out.println("Move " + move + " is invalid");
+            }
         }
     }
 }
