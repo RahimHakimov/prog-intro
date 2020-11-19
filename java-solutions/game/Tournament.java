@@ -19,20 +19,16 @@ public class Tournament {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public int[] whoIsTheBestPlayer(Board board, int c) {
+    public int[] whoIsTheBestPlayer(Board board, int c, int numberOfGames) {
         results = new int[numberOfPlayers];
         int[][] TableOfResults = new int[numberOfPlayers][numberOfPlayers];
         for (int t = 0; t < c; ++t) {
             for (int i = 0; i < numberOfPlayers; ++i) {
                 for (int j = i + 1; j < numberOfPlayers; ++j) {
-                    boolean whoIsFirst = new Random().nextBoolean();
-                    Game game = new Game(log, new Player[]{players[j], players[i]});
-                    if (whoIsFirst) {
-                        game = new Game(log, new Player[]{players[i], players[j]});
-                    }
-                    int result = game.play(board);
+                    Match match = new Match(log, players[i], players[j], numberOfGames);
+                    int result = match.play(board);
                     if (result >= 0) {
-                        if ((whoIsFirst && result == 0) || (!whoIsFirst && result == 1)) {
+                        if (result == 0) {
                             TableOfResults[i][j] = 3;
                             TableOfResults[j][i] = 0;
                             results[i] += 3;
