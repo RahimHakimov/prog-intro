@@ -30,7 +30,7 @@ public class Main {
                 "\nEnter 1 to HumanPlayer\nEnter 2 to RandomPlayer\nEnter 3 to SequentialPlayer\n");
         int ind = 0;
         while (ind < numberOfPlayers) {
-            System.out.println("Please, enter type of player:");
+            System.out.println("Please, enter type of player"+(ind+1)+":");
             int x = s.nextInt();
             if (x == 1) players[ind] = new HumanPlayer();
             else if (x == 2) players[ind] = new RandomPlayer();
