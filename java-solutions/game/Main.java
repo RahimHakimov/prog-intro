@@ -5,6 +5,7 @@ import game.player.Player;
 import game.player.RandomPlayer;
 import game.player.SequentialPlayer;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,32 +13,47 @@ import java.util.Scanner;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 public class Main {
+    public static Scanner s;
+    public static int checkInputNext() {
+        int n = -1;
+        while (n <= 0) {
+            String t = s.next();
+            try {
+                n = Integer.parseInt(t);
+            } catch (Exception e) {
+                System.out.println("Please, enter NUMBER, greater than 0!!! enter number!!!");
+            }
+        }
+        return n;
+    }
     public static void main(String[] args) {
         int n, m, k, c, numberOfPlayers, numberOfGamesInOneMatch;
-        Scanner s = new Scanner(System.in);
+        s = new Scanner(System.in);
         System.out.println("Please enter sides of board(m, n) and numer of equal signs to win(k):");
-        n = s.nextInt();
-        m = s.nextInt();
-        k = s.nextInt();
+        n = checkInputNext();
+        m = checkInputNext();
+        k = checkInputNext();
         System.out.println("Please, enter number of cycles of one tournament");
-        c = s.nextInt();
+        c = checkInputNext();
         System.out.println("Please, enter number of players");
-        numberOfPlayers = s.nextInt();
+        numberOfPlayers = checkInputNext();
         System.out.println("Please, enter number of games to win in one match");
-        numberOfGamesInOneMatch = s.nextInt();
+        numberOfGamesInOneMatch = checkInputNext();
         Player[] players = new Player[numberOfPlayers];
         System.out.println("Please, choose players!" +
                 "\nEnter 1 to HumanPlayer\nEnter 2 to RandomPlayer\nEnter 3 to SequentialPlayer\n");
         int ind = 0;
         while (ind < numberOfPlayers) {
             System.out.println("Please, enter type of player"+(ind+1)+":");
-            int x = s.nextInt();
-            if (x == 1) players[ind] = new HumanPlayer();
-            else if (x == 2) players[ind] = new RandomPlayer();
-            else if (x == 3) players[ind] = new SequentialPlayer();
-            else {
-                System.out.println("You had some mistake, try again!!!");
-                continue;
+            String x = s.next();
+            switch (x) {
+                case "1" -> players[ind] = new HumanPlayer();
+                case "2" -> players[ind] = new RandomPlayer();
+                case "3" -> players[ind] = new SequentialPlayer();
+                default -> {
+                    System.out.println("You had some mistake, try again!!!");
+                    continue;
+                }
             }
             ind++;
         }
