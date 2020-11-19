@@ -26,23 +26,18 @@ public class HumanPlayer implements Player {
     @Override
     public Move move(final Position position, final Cell cell) {
         while (true) {
-            out.println("Position");
-            out.println(position);
-            out.println(cell + "'s move");
-            out.println("Enter row and column");
-            Scanner in1 = new Scanner(in.nextLine());
-            while (!in1.hasNext()) {in1 = new Scanner(in.nextLine());}
-            int r = in1.nextInt();
-            while (!in1 .hasNext()) {in1 = new Scanner(in.nextLine());}
-            int c = in1.nextInt();
-            final Move move = new Move(r-1, c-1, cell);
-            if (in1.hasNextInt()) {
-                out.println("Please, enter only two numbers!!!");
-            }
-            else if (position.isValid(move)) {
-                return move;
-            } else {
+            try {
+                out.println("Position");
+                out.println(position);
+                out.println(cell + "'s move");
+                out.println("Enter row and column");
+                final Move move = new Move(in.nextInt(), in.nextInt(), cell);
+                if (position.isValid(move)) {
+                    return move;
+                }
                 out.println("Move " + move + " is invalid");
+            } catch (Exception e) {
+                return new Move(-1, -1, cell);
             }
         }
     }
