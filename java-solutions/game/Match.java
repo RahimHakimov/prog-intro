@@ -1,9 +1,5 @@
 package game;
 
-import game.player.Player;
-
-import java.util.Random;
-
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */

@@ -1,4 +1,4 @@
-package game.player;
+package game;
 
 import game.Cell;
 import game.Move;

@@ -1,12 +1,9 @@
 package game;
 
 import game.player.HumanPlayer;
-import game.player.Player;
 import game.player.RandomPlayer;
 import game.player.SequentialPlayer;
 
-import java.io.InputStream;
-import java.util.List;
 import java.util.Scanner;
 
 /**

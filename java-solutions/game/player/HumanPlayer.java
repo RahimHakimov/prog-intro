@@ -2,6 +2,7 @@ package game.player;
 
 import game.Cell;
 import game.Move;
+import game.Player;
 import game.Position;
 
 import java.io.PrintStream;

@@ -1,9 +1,6 @@
 package game.player;
 
-import game.Board;
-import game.Cell;
-import game.Move;
-import game.Position;
+import game.*;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
