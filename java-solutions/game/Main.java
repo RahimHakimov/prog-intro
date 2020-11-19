@@ -11,6 +11,7 @@ import java.util.Scanner;
  */
 public class Main {
     public static Scanner s;
+
     public static int checkInputNext() {
         int n = -1;
         while (n <= 0) {
@@ -23,6 +24,7 @@ public class Main {
         }
         return n;
     }
+
     public static void main(String[] args) {
         int n, m, k, c, numberOfPlayers, numberOfGamesInOneMatch;
         s = new Scanner(System.in);
@@ -41,7 +43,7 @@ public class Main {
                 "\nEnter 1 to HumanPlayer\nEnter 2 to RandomPlayer\nEnter 3 to SequentialPlayer\n");
         int ind = 0;
         while (ind < numberOfPlayers) {
-            System.out.println("Please, enter type of player"+(ind+1)+":");
+            System.out.println("Please, enter type of player" + (ind + 1) + ":");
             String x = s.next();
             switch (x) {
                 case "1" -> players[ind] = new HumanPlayer();

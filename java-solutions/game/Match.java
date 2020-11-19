@@ -24,11 +24,14 @@ public class Match {
         int numOfGame = 0;
         while (Math.max(numOfWins1, numOfWins2) < numberOfGames) {
             Game game;
-            if (numOfGame %2 == 0) {game = new Game(log, new Player[]{player1, player2});}
-            else {game = new Game(log, new Player[]{player2, player1});}
+            if (numOfGame % 2 == 0) {
+                game = new Game(log, new Player[]{player1, player2});
+            } else {
+                game = new Game(log, new Player[]{player2, player1});
+            }
             int result = game.play(board);
             if (result >= 0) {
-                if ((numOfGame%2 == 0 && result == 0) || (numOfGame%2!=0 && result == 1)) {
+                if ((numOfGame % 2 == 0 && result == 0) || (numOfGame % 2 != 0 && result == 1)) {
                     numOfWins1++;
                 } else {
                     numOfWins2++;

@@ -1,9 +1,5 @@
 package game;
 
-import game.Cell;
-import game.Move;
-import game.Position;
-
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
