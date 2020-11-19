@@ -33,7 +33,7 @@ public class HumanPlayer implements Player {
             Scanner in1 = new Scanner(in.nextLine());
             while (!in1.hasNext()) {in1 = new Scanner(in.nextLine());}
             int r = in1.nextInt();
-            while (!in1.hasNext()) {in1 = new Scanner(in.nextLine());}
+            while (!in1 .hasNext()) {in1 = new Scanner(in.nextLine());}
             int c = in1.nextInt();
             final Move move = new Move(r-1, c-1, cell);
             if (in1.hasNextInt()) {

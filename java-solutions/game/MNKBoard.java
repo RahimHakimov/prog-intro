@@ -7,25 +7,25 @@ import java.util.Map;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 public class MNKBoard implements Board, Position {
-    private final Cell emptyCell = new Cell();
+    private final Cell emptyCell = Cell.E;
     private Map<Cell, Character> SYMBOLS;
 
     private final Cell[][] cells;
     private final int k;
     private int notEmpty = 0;
-    private char turn;
+    private Cell turn;
 
-    public MNKBoard(int n, int m, int k) {
-        this.cells = new Cell[n][m];
+    public MNKBoard(int m, int n, int k) {
+        this.cells = new Cell[m][n];
         this.k = k;
-        turn = 'X';
+        turn = Cell.X;
         SYMBOLS = new HashMap<>();
-        SYMBOLS.put(new Cell('X'), 'X');
-        SYMBOLS.put(new Cell('O'), 'O');
+        SYMBOLS.put(Cell.X, 'X');
+        SYMBOLS.put(Cell.O, 'O');
         SYMBOLS.put(emptyCell, '.');
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                cells[i][j] = new Cell();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                cells[i][j] = Cell.E;
             }
         }
     }
@@ -37,7 +37,7 @@ public class MNKBoard implements Board, Position {
 
     @Override
     public Cell getCell() {
-        return new Cell(turn);
+        return turn;
     }
 
     private int NumberOfEquals(int r, int c, int i, int j) {
@@ -45,7 +45,7 @@ public class MNKBoard implements Board, Position {
         while (r + i >= 0 && c + j >= 0
                 && r + i < cells.length
                 && c + j < cells[0].length
-                && cells[r + i][c + j].equals(new Cell(turn))
+                && cells[r + i][c + j] == turn
                 && cnt < getK()) {
             cnt++;
             r += i;
@@ -71,8 +71,8 @@ public class MNKBoard implements Board, Position {
         if (++notEmpty == getN() * getM()) {
             return Result.DRAW;
         }
-        if (turn == 'X') turn = 'O';
-        else turn = 'X';
+        if (turn == Cell.X) turn = Cell.O;
+        else turn = Cell.X;
         return Result.UNKNOWN;
     }
 
@@ -97,10 +97,10 @@ public class MNKBoard implements Board, Position {
 
     @Override
     public boolean isValid(final Move move) {
-        return 0 <= move.getRow() && move.getRow() < cells.length
-                && 0 <= move.getColumn() && move.getColumn() < cells[0].length
+        return (0 <= move.getRow() && move.getRow() < cells.length)
+                && (0 <= move.getColumn() && move.getColumn() < cells[0].length)
                 && cells[move.getRow()][move.getColumn()].equals(emptyCell)
-                && getCell().equals(new Cell(turn));
+                && move.getValue().equals(turn);
     }
 
     @Override

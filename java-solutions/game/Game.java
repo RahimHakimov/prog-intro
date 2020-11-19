@@ -9,17 +9,17 @@ import java.util.List;
  */
 public class Game {
     private final boolean log;
-    private final List<Player> players;
+    private final Player[] players;
 
-    public Game(final boolean log, final List<Player> players) {
+    public Game(final boolean log, final Player[] players) {
         this.log = log;
         this.players = players;
     }
 
     public int play(Board board) {
         while (true) {
-            for (int i = 0; i < players.size(); i++) {
-                final int result = move(board, players.get(i), i);
+            for (int i = 0; i < players.length; i++) {
+                final int result = move(board, players[i], i);
                 if (result != -2) {
                     return result;
                 }
@@ -38,7 +38,7 @@ public class Game {
             return no;
         } else if (result == Result.LOSE) {
             log("Player " + no + " lose");
-            return (no + 1) % players.size();
+            return (no + 1) % players.length;
         } else if (result == Result.DRAW) {
             log("Draw");
             return -1;
