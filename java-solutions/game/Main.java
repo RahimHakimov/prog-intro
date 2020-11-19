@@ -29,7 +29,7 @@ public class Main {
         System.out.println("Please, choose players!" +
                 "\nEnter 1 to HumanPlayer\nEnter 2 to RandomPlayer\nEnter 3 to SequentialPlayer\n");
         int ind = 0;
-        while (ind<numberOfPlayers) {
+        while (ind < numberOfPlayers) {
             System.out.println("Please, enter type of player:");
             int x = s.nextInt();
             if (x == 1) players[ind] = new HumanPlayer();
@@ -38,7 +38,8 @@ public class Main {
             else {
                 System.out.println("You had some mistake, try again!!!");
                 continue;
-            } ind++;
+            }
+            ind++;
         }
         final Tournament tournament = new Tournament(true, numberOfPlayers, players);
         int[] results = tournament.whoIsTheBestPlayer(new MNKBoard(m, n, k), c, numberOfGamesInOneMatch);
