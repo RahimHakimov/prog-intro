@@ -4,7 +4,7 @@ package game;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public class ProxyPosition implements Position{
+public class ProxyPosition implements Position {
     private Position position;
 
     ProxyPosition(Position board) {

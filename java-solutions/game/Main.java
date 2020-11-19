@@ -13,11 +13,11 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         int n = 5, m = 5, k = 4, c = 2, numberOfPlayers = 3;
-        Player[] players = new Player[] {new HumanPlayer(), new HumanPlayer(), new SequentialPlayer()};
+        Player[] players = new Player[]{new HumanPlayer(), new HumanPlayer(), new SequentialPlayer()};
         final Tournament tournament = new Tournament(true, numberOfPlayers, players);
-        int []results = tournament.whoIsTheBestPlayer(m, n, k, c);
-        for (int i = 0; i< numberOfPlayers; ++i) {
-            System.out.println((i+1) + " "+results[i]);
+        int[] results = tournament.whoIsTheBestPlayer(new MNKBoard(m, n, k), c);
+        for (int i = 0; i < numberOfPlayers; ++i) {
+            System.out.println((i + 1) + " " + results[i]);
         }
     }
 }

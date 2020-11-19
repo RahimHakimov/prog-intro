@@ -19,7 +19,7 @@ public class Tournament {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public int[] whoIsTheBestPlayer(int m, int n, int k, int c) {
+    public int[] whoIsTheBestPlayer(Board board, int c) {
         results = new int[numberOfPlayers];
         int[][] TableOfResults = new int[numberOfPlayers][numberOfPlayers];
         for (int t = 0; t < c; ++t) {
@@ -30,7 +30,7 @@ public class Tournament {
                     if (whoIsFirst) {
                         game = new Game(log, new Player[]{players[i], players[j]});
                     }
-                    int result = game.play(new MNKBoard(m, n, k));
+                    int result = game.play(board);
                     if (result >= 0) {
                         if ((whoIsFirst && result == 0) || (!whoIsFirst && result == 1)) {
                             TableOfResults[i][j] = 3;
@@ -51,15 +51,17 @@ public class Tournament {
             }
             if (log) {
                 System.out.print(" ");
-                for (int i = 0; i<numberOfPlayers; ++i) {
-                    System.out.print(" "+(i+1));
-                }System.out.println();
-                for (int i = 0; i<numberOfPlayers; ++i) {
-                    System.out.print((i+1)+" ");
-                    for (int j = 0; j<numberOfPlayers; ++j) {
-                        if (i!=j) System.out.print(TableOfResults[i][j]+" ");
+                for (int i = 0; i < numberOfPlayers; ++i) {
+                    System.out.print(" " + (i + 1));
+                }
+                System.out.println();
+                for (int i = 0; i < numberOfPlayers; ++i) {
+                    System.out.print((i + 1) + " ");
+                    for (int j = 0; j < numberOfPlayers; ++j) {
+                        if (i != j) System.out.print(TableOfResults[i][j] + " ");
                         else System.out.print("# ");
-                    }System.out.println();
+                    }
+                    System.out.println();
                 }
             }
         }
