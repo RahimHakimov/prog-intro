@@ -17,6 +17,12 @@ public final class Const implements MyExpression {
     }
 
     @Override
+    public int evaluate(int x, int y, int z) {
+        return value;
+    }
+
+
+    @Override
     public int getPriority() {
         return 2020;
     }

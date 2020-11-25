@@ -1,5 +1,6 @@
 package expression;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
@@ -15,6 +16,19 @@ public final class Variable implements MyExpression {
     @Override
     public int evaluate(int x) {
         return x;
+    }
+
+    @Override
+    public int evaluate(int x, int y, int z) {
+        switch (var) {
+            case "x":
+                return x;
+            case "y":
+                return y;
+            case "z":
+                return z;
+        }
+        throw new NoSuchElementException("Variables can be only x, y and z");
     }
 
     @Override

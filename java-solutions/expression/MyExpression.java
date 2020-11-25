@@ -4,7 +4,7 @@ package expression;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public interface MyExpression extends Expression {
+public interface MyExpression extends TripleExpression, Expression {
     int getPriority();
     boolean isValuable();
 }
