@@ -32,9 +32,9 @@ public abstract class BinaryOperation implements MyExpression {
     }
 
     private boolean requireBrackets(MyExpression expr) {
-        return second.getPriority() < this.getPriority() ||
-                second.getPriority() == this.getPriority() &&
-                        (second.isValuable() || this.isValuable());
+        return expr.getPriority() < this.getPriority() ||
+                expr.getPriority() == this.getPriority() &&
+                        (expr.isValuable() || this.isValuable());
     }
 
     @Override
