@@ -35,7 +35,7 @@ public abstract class BinaryOperation implements MyExpression {
         return expr.getPriority() < this.getPriority() ||
                 expr.getPriority() == this.getPriority() &&
                         (expr.isValuable() || this.isValuable());
-    }
+      }
 
     @Override
     public String toMiniString() {
