@@ -24,7 +24,7 @@ public final class Const implements MyExpression {
 
     @Override
     public int getPriority() {
-        return 2020;
+        return Operation.PRIORITIES.get(Operation.CONST);
     }
 
     @Override
