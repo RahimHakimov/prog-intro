@@ -25,4 +25,9 @@ public class StringSource implements ExpressionSource{
     public char next() {
         return data.charAt(pos++);
     }
+
+    @Override
+    public ExpressionException error(final String message) {
+        return new ExpressionException(pos + ": " + message);
+    }
 }

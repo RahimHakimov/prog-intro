@@ -39,7 +39,7 @@ public class BaseParser {
 
     protected void expect(final char c) {
         if (ch != c) {
-            throw new AssertionError("Expected '" + c + "', found '" + ch + "'");
+            throw error("Expected '" + c + "', found '" + ch + "'");
         }
         nextChar();
     }
@@ -48,6 +48,10 @@ public class BaseParser {
         for (char c : value.toCharArray()) {
             expect(c);
         }
+    }
+
+    protected ExpressionException error(final String message) {
+        return source.error(message);
     }
 
     protected boolean between(final char from, final char to) {
@@ -72,7 +76,7 @@ public class BaseParser {
         } else if (between('1', '9')) {
             copyDigits(sb);
         } else {
-            throw new AssertionError("Invalid number");
+            throw error("Invalid number");
         }
     }
 
