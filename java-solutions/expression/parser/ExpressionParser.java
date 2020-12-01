@@ -1,4 +1,4 @@
-package parser;
+package expression.parser;
 
 import expression.*;
 

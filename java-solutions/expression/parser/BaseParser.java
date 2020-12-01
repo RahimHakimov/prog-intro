@@ -1,4 +1,4 @@
-package parser;
+package expression.parser;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
