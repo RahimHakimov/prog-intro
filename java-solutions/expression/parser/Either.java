@@ -1,4 +1,4 @@
-package parser;
+package expression.parser;
 
 import java.util.function.Function;
 
@@ -6,13 +6,6 @@ import java.util.function.Function;
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
 public interface Either<L, R> {
-    <NR> Either<L, NR> flatMapRight(final Function<? super R, ? extends Either<L, NR>> f);
-
-    boolean isRight();
-
-    L getLeft();
-    R getRight();
-
     static <L, R> Either<L, R> right(final R value) {
         return new Either<>() {
 
@@ -62,4 +55,12 @@ public interface Either<L, R> {
             }
         };
     }
+
+    <NR> Either<L, NR> flatMapRight(final Function<? super R, ? extends Either<L, NR>> f);
+
+    boolean isRight();
+
+    L getLeft();
+
+    R getRight();
 }

@@ -1,10 +1,10 @@
-package parser;
+package expression.parser;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public class StringSource implements ExpressionSource{
+public class StringSource implements ExpressionSource {
     private final String data;
     private int pos;
 

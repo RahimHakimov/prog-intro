@@ -1,4 +1,4 @@
-package parser;
+package expression.parser;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
@@ -6,6 +6,8 @@ package parser;
 
 public interface ExpressionSource {
     boolean hasNext();
+
     char next();
+
     ExpressionException error(final String message);
 }

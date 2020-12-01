@@ -1,4 +1,4 @@
-package parser;
+package expression.parser;
 
 import expression.*;
 
@@ -6,7 +6,7 @@ import expression.*;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public class ExpressionParser extends BaseParser implements Parser{
+public class ExpressionParser extends BaseParser implements Parser {
     public ExpressionParser(StringSource stringSource) {
         super(stringSource);
     }
@@ -52,7 +52,7 @@ public class ExpressionParser extends BaseParser implements Parser{
             skipWhitespace();
             expect(')');
             return parsed;
-        }else if (test('-')) {
+        } else if (test('-')) {
             skipWhitespace();
             if (between('0', '9')) {
                 return parseConst(false);
@@ -66,18 +66,14 @@ public class ExpressionParser extends BaseParser implements Parser{
     }
 
     private MyExpression buildOperation(MyExpression left, MyExpression right,
-                                            Operation oper) {
-        switch (oper) {
-            case ADD:
-                return new Add(left, right);
-            case SUB:
-                return new Subtract(left, right);
-            case MUL:
-                return new Multiply(left, right);
-            case DIV:
-                return new Divide(left, right);
-        }
-        return null;
+                                        Operation oper) {
+        return switch (oper) {
+            case ADD -> new Add(left, right);
+            case SUB -> new Subtract(left, right);
+            case MUL -> new Multiply(left, right);
+            case DIV -> new Divide(left, right);
+            default -> null;
+        };
     }
 
     private MyExpression parseVariable() {
