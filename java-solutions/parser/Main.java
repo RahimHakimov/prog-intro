@@ -1,4 +1,4 @@
-package expression.parser;
+package parser;
 
 import expression.MyExpression;
 
