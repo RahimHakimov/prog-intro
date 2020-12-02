@@ -24,7 +24,7 @@ public class ParserBitwiseTest extends ParserTest {
                 op("x & y + z", (x, y, z) -> x & y + z),
                 op("x ^ y - z", (x, y, z) -> x ^ y - z),
                 op("x | y + z", (x, y, z) -> x | y + z),
-                op("(- - - x^1883669513)|(- x^1681810605)", (x, y, z) -> (- - - x^1883669513)|(- x^1681810605))
+                op("(- - - x^1883669513)|(- x^1681810605)", (x, y, z) -> (- - -x ^ 1883669513) | (-x ^ 1681810605))
         ));
     }
 
