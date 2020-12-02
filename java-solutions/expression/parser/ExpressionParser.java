@@ -67,13 +67,16 @@ public class ExpressionParser extends BaseParser implements Parser {
 
     private MyExpression buildOperation(MyExpression left, MyExpression right,
                                         Operation oper) {
-        return switch (oper) {
-            case ADD -> new Add(left, right);
-            case SUB -> new Subtract(left, right);
-            case MUL -> new Multiply(left, right);
-            case DIV -> new Divide(left, right);
-            default -> null;
-        };
+        switch (oper) {
+            case ADD: return new Add(left, right);
+            case SUB: return new Subtract(left, right);
+            case MUL: return new Multiply(left, right);
+            case DIV: return new Divide(left, right);
+            case AND: return new BitwiseAnd(left, right);
+            case XOR: return new BitwiseXor(left, right);
+            case OR: return new BitwiseOr(left, right);
+        }
+        return null;
     }
 
     private MyExpression parseVariable() {

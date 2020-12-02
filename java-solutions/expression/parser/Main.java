@@ -10,6 +10,6 @@ public class Main {
     public static void main(String[] args) {
         ExpressionParser parser = new ExpressionParser(new StringSource("x* (x - 2)*x + 1"));
         MyExpression result = parser.parseExpression();
-        System.out.println();
+        System.out.println(result.evaluate(5));
     }
 }
