@@ -1,5 +1,7 @@
 package expression.parser;
 
+import expression.exceptions.ParsingException;
+
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
@@ -10,10 +12,6 @@ public class StringSource implements ExpressionSource {
 
     public StringSource(final String data) {
         this.data = data;
-    }
-
-    public StringSource() {
-        this.data = "";
     }
 
     @Override
@@ -27,7 +25,12 @@ public class StringSource implements ExpressionSource {
     }
 
     @Override
-    public ExpressionException error(final String message) {
-        return new ExpressionException(pos + ": " + message);
+    public ParsingException error(final String message) {
+        return new ParsingException(pos + ": " + message);
+    }
+
+    @Override
+    public String getPart() {
+        return data.substring(Math.max(pos - 10, 0), Math.min(pos + 5, data.length()));
     }
 }

@@ -1,7 +1,9 @@
-package expression.parser;
+package expression.exceptions;
 
 import expression.*;
-import expression.exceptions.*;
+import expression.parser.BaseParser;
+import expression.parser.Parser;
+import expression.parser.StringSource;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)

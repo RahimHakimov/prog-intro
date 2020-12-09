@@ -1,5 +1,7 @@
 package expression.parser;
 
+import expression.exceptions.ParsingException;
+
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
@@ -9,5 +11,7 @@ public interface ExpressionSource {
 
     char next();
 
-    ExpressionException error(final String message);
+    String getPart();
+
+    ParsingException error(final String message);
 }
