@@ -4,7 +4,7 @@ package expression;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public final class Subtract extends BinaryOperation {
+public class Subtract extends BinaryOperation {
 
     public Subtract(MyExpression first, MyExpression second) {
         super(first, second, "-");

@@ -4,7 +4,7 @@ package expression;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public final class BitwiseAnd extends BinaryOperation {
+public class BitwiseAnd extends BinaryOperation {
 
     public BitwiseAnd(MyExpression first, MyExpression second) {
         super(first, second, "&");

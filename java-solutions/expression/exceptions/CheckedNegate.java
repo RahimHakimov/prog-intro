@@ -1,13 +1,14 @@
 package expression.exceptions;
 
 import expression.MyExpression;
+import expression.Negate;
 import expression.UnaryOperation;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public class CheckedNegate extends UnaryOperation {
+public class CheckedNegate extends Negate {
     public CheckedNegate(MyExpression first) {
         super(first);
     }
@@ -19,20 +20,4 @@ public class CheckedNegate extends UnaryOperation {
         }
         return -x;
     }
-
-    @Override
-    protected String getOperationType() {
-        return "-";
-    }
-
-    @Override
-    public int getPriority() {
-        return 100;
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
-    }
-
 }

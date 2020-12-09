@@ -1,17 +1,16 @@
 package expression.exceptions;
 
-import expression.BinaryOperation;
+import expression.Multiply;
 import expression.MyExpression;
-import expression.Operation;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public final class CheckedMultiply extends BinaryOperation {
+public final class CheckedMultiply extends Multiply {
 
     public CheckedMultiply(MyExpression first, MyExpression second) {
-        super(first, second, "*");
+        super(first, second);
     }
 
     @Override
@@ -21,15 +20,5 @@ public final class CheckedMultiply extends BinaryOperation {
             throw new OverflowException();
         }
         return res;
-    }
-
-    @Override
-    public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.MUL);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
     }
 }

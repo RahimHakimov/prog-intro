@@ -1,6 +1,7 @@
 package expression.exceptions;
 
 import expression.BinaryOperation;
+import expression.Divide;
 import expression.MyExpression;
 import expression.Operation;
 
@@ -8,10 +9,10 @@ import expression.Operation;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public final class CheckedDivide extends BinaryOperation {
+public final class CheckedDivide extends Divide {
 
     public CheckedDivide(MyExpression first, MyExpression second) {
-        super(first, second, "/");
+        super(first, second);
     }
 
     @Override
@@ -23,15 +24,5 @@ public final class CheckedDivide extends BinaryOperation {
             throw new OverflowException();
         }
         return x / y;
-    }
-
-    @Override
-    public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.DIV);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
     }
 }

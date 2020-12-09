@@ -1,18 +1,17 @@
 package expression.exceptions;
 
-import expression.BinaryOperation;
 import expression.MyExpression;
-import expression.Operation;
+import expression.Subtract;
 
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public final class CheckedSubtract extends BinaryOperation {
+public final class CheckedSubtract extends Subtract {
 
     public CheckedSubtract(MyExpression first, MyExpression second) {
-        super(first, second, "-");
+        super(first, second);
     }
 
     @Override
@@ -28,15 +27,5 @@ public final class CheckedSubtract extends BinaryOperation {
             throw new OverflowException();
         }
         return res;
-    }
-
-    @Override
-    public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.SUB);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
     }
 }

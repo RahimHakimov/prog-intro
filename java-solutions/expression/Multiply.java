@@ -4,7 +4,7 @@ package expression;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public final class Multiply extends BinaryOperation {
+public class Multiply extends BinaryOperation {
 
     public Multiply(MyExpression first, MyExpression second) {
         super(first, second, "*");

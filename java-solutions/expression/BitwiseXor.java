@@ -4,7 +4,7 @@ package expression;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public final class BitwiseXor extends BinaryOperation {
+public class BitwiseXor extends BinaryOperation {
 
     public BitwiseXor(MyExpression first, MyExpression second) {
         super(first, second, "^");
