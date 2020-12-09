@@ -10,6 +10,7 @@ public class ExpressionParser extends expression.parser.ExpressionParser {
     public ExpressionParser(StringSource stringSource) {
         super(stringSource);
     }
+
     public ExpressionParser() {
         super();  // max length of binary operator
     }

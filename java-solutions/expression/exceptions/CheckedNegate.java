@@ -2,7 +2,6 @@ package expression.exceptions;
 
 import expression.MyExpression;
 import expression.Negate;
-import expression.UnaryOperation;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)

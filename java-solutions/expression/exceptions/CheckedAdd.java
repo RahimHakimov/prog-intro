@@ -1,7 +1,7 @@
 package expression.exceptions;
 
-import expression.MyExpression;
 import expression.Add;
+import expression.MyExpression;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)

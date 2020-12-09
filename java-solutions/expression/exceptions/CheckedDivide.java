@@ -1,9 +1,7 @@
 package expression.exceptions;
 
-import expression.BinaryOperation;
 import expression.Divide;
 import expression.MyExpression;
-import expression.Operation;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)

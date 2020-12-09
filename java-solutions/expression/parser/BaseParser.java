@@ -7,9 +7,9 @@ import expression.exceptions.ParsingException;
  */
 
 public class BaseParser {
+    private final char[] buffer;
     protected char ch;
     private ExpressionSource source;
-    private final char[] buffer;
     private int head = 0;
     private int size = 0;
     private int pos = 0;

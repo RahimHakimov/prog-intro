@@ -2,7 +2,6 @@ package expression.exceptions;
 
 import expression.BitwiseOr;
 import expression.MyExpression;
-import expression.Operation;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
