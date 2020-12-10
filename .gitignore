@@ -6,3 +6,9 @@ _*
 
 # Do not store .class files
 *.class
+
+#Do not store Test.java files
+*Test.java
+
+#Do not store project files .iml
+*.iml
