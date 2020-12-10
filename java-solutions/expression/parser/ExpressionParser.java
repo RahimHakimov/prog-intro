@@ -67,6 +67,10 @@ public class ExpressionParser extends BaseParser implements Parser {
             return parseConst(true);
         } else {
             String token = parseToken();
+            Operation operation = Operation.STRING_TO_UNARY.get(token);
+            if (operation != null) {
+                return buildUnaryOperation(parseValue(), operation);
+            }
             return getVariable(token);
         }
     }
@@ -120,5 +124,16 @@ public class ExpressionParser extends BaseParser implements Parser {
         } catch (NumberFormatException e) {
             throw new IllegalConstException(sb.toString(), getParsingInfo());
         }
+    }
+
+    private MyExpression buildUnaryOperation(MyExpression expr,
+                                             Operation operation) {
+        switch (operation) {
+            case SQRT:
+                return new CheckedSqrt(expr);
+            case ABS:
+                return new CheckedAbs(expr);
+        }
+        return null;
     }
 }

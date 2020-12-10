@@ -12,22 +12,16 @@ public enum Operation {
     OR, XOR, AND,
     ADD, SUB,
     MUL, DIV,
+    ABS, SQRT,
     CONST, VAR;
 
-    public static final Map<Operation, Integer> PRIORITIES = Map.of(
-            OR, 0,
-            XOR, 1,
-            AND, 2,
-            ADD, 3, SUB, 3,
-            MUL, 4, DIV, 4,
-            CONST, 5, VAR, 5
-    );
+    public static final Map<Operation, Integer> PRIORITIES = Map.ofEntries(Map.entry(OR, 0), Map.entry(XOR, 1), Map.entry(AND, 2), Map.entry(ADD, 3), Map.entry(SUB, 3), Map.entry(MUL, 4), Map.entry(DIV, 4), Map.entry(ABS, 5), Map.entry(SQRT, 5), Map.entry(CONST, 6), Map.entry(VAR, 6));
 
-    public static final Map<Operation, String> OPERATORS_STRING = Map.of(
-            ADD, "+", SUB, "-",
-            MUL, "*", DIV, "/",
-            OR, "|", XOR, "^",
-            AND, "&"
+    public static final Map<Operation, String> OPERATORS_STRING = Map.ofEntries(
+            Map.entry(ADD, "+"), Map.entry(SUB, "-"),
+            Map.entry(MUL, "*"), Map.entry(DIV, "/"),
+            Map.entry(OR, "|"), Map.entry(XOR, "^"),
+            Map.entry(AND, "&"), Map.entry(ABS, "abs"), Map.entry(SQRT, "sqrt")
     );
 
     public static final Set<String> VARIABLES = Set.of(
@@ -40,6 +34,11 @@ public enum Operation {
             List.of(AND),
             List.of(ADD, SUB),
             List.of(MUL, DIV),
+            List.of(ABS, SQRT),
             List.of(CONST, VAR)
+    );
+
+    public static final Map<String, Operation> STRING_TO_UNARY = Map.of(
+            "sqrt", SQRT, "abs", ABS
     );
 }
