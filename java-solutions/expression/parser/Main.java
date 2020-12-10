@@ -1,10 +1,5 @@
 package expression.parser;
 
-import expression.MyExpression;
-import expression.exceptions.OverflowException;
-import expression.exceptions.ParsingException;
-import expression.exceptions.ZeroDivisionException;
-
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */

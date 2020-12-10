@@ -5,8 +5,8 @@ package expression.parser;
  */
 
 public class BaseParser {
-    private ExpressionSource source;
     protected char ch;
+    private ExpressionSource source;
 
     protected BaseParser(final ExpressionSource source) {
         this.source = source;
@@ -56,7 +56,6 @@ public class BaseParser {
     protected boolean between(final char from, final char to) {
         return from <= ch && ch <= to;
     }
-
 
 
     protected void copyDigits(final StringBuilder sb) {

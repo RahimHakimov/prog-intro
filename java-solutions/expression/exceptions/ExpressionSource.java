@@ -1,7 +1,5 @@
 package expression.exceptions;
 
-import expression.exceptions.ParsingException;
-
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
