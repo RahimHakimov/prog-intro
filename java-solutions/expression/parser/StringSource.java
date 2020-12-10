@@ -14,6 +14,10 @@ public class StringSource implements ExpressionSource {
         this.data = data;
     }
 
+    public StringSource() {
+        this.data = "";
+    }
+
     @Override
     public boolean hasNext() {
         return pos < data.length();
@@ -26,11 +30,6 @@ public class StringSource implements ExpressionSource {
 
     @Override
     public ParsingException error(final String message) {
-        return new ParsingException(pos + ": " + message);
-    }
-
-    @Override
-    public String getPart() {
-        return data.substring(Math.max(pos - 10, 0), Math.min(pos + 5, data.length()));
+        return new ExpressionException(pos + ": " + message);
     }
 }

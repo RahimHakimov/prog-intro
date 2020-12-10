@@ -1,62 +1,59 @@
 package expression.parser;
 
 import expression.*;
-import expression.exceptions.*;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
 public class ExpressionParser extends BaseParser implements Parser {
-
     public ExpressionParser(StringSource stringSource) {
-        super(stringSource, 2);
+        super(stringSource);
     }
 
     public ExpressionParser() {
-        super(2);  // max length of binary operator
+        super();
     }
 
     @Override
-    public MyExpression parse(String expression) throws ParsingException {
+    public TripleExpression parse(String expression) {
         changeSource(new StringSource(expression));
-        MyExpression result = parseExpression();
-        if (hasNext() && ch != '\0') {
-            throw new MissingOpeningParenthesis(getParsingInfo());
-        }
-        return result;
+        nextChar();
+        return parseExpression();
     }
 
-    public MyExpression parseExpression() throws ParsingException {
+    public MyExpression parseExpression() {
         skipWhitespace();
         return parseTerm(0);
     }
 
-    private MyExpression parseTerm(int priority) throws ParsingException {
+    private MyExpression parseTerm(int priority) {
         skipWhitespace();
         if (priority == Operation.PRIORITIES.get(Operation.CONST)) {
             return parseValue();
         }
+
         MyExpression parsed = parseTerm(priority + 1);
+
         while (true) {
-            Operation curOperation = getBinaryOperator(priority);
-            if (curOperation == null) {
+            skipWhitespace();
+            final Operation curOperation = Operation.CHAROPERANDS.get(ch);
+            if (curOperation == null || priority != Operation.PRIORITIES.get(curOperation)) {
                 return parsed;
             }
-            parsed = buildBinaryOperation(parsed, parseTerm(priority + 1), curOperation);
+            nextChar();
+            parsed = buildOperation(parsed, parseTerm(priority + 1), curOperation);
         }
     }
 
-    private MyExpression parseValue() throws ParsingException {
-        skipWhitespace();
+    private MyExpression parseValue() {
         if (test('(')) {
             MyExpression parsed = parseExpression();
             skipWhitespace();
-            if (!expect(')')) {
-                throw new MissingClosingParenthesis(getParsingInfo());
-            }
+            expect(')');
             return parsed;
         } else if (test('-')) {
+            skipWhitespace();
             if (between('0', '9')) {
                 return parseConst(false);
             }
@@ -64,54 +61,39 @@ public class ExpressionParser extends BaseParser implements Parser {
         } else if (between('0', '9')) {
             return parseConst(true);
         } else {
-            String token = parseToken();
-            Operation operation = Operation.STRING_TO_UNARY.get(token);
-            if (operation != null) {
-                return buildUnaryOperation(parseValue(), operation);
-            }
-            return getVariable(token);
+            return parseVariable();
         }
     }
 
-    private Operation getBinaryOperator(int priority) {
-        skipWhitespace();
-        for (Operation operation : Operation.PRIORITY_TO_OPER.get(priority)) {
-            if (test(Operation.OPERATORS_STRING.get(operation))) {
-                return operation;
-            }
-        }
-        return null;
-    }
-
-    private MyExpression buildBinaryOperation(MyExpression left, MyExpression right,
-                                              Operation operation) {
-        switch (operation) {
+    private MyExpression buildOperation(MyExpression left, MyExpression right,
+                                        Operation oper) {
+        switch (oper) {
             case ADD:
-                return new CheckedAdd(left, right);
+                return new Add(left, right);
             case SUB:
-                return new CheckedSubtract(left, right);
+                return new Subtract(left, right);
             case MUL:
-                return new CheckedMultiply(left, right);
+                return new Multiply(left, right);
             case DIV:
-                return new CheckedDivide(left, right);
-            case OR:
-                return new CheckedBitwiseOr(left, right);
-            case XOR:
-                return new CheckedBitwiseXor(left, right);
+                return new Divide(left, right);
             case AND:
-                return new CheckedBitwiseAnd(left, right);
+                return new BitwiseAnd(left, right);
+            case XOR:
+                return new BitwiseXor(left, right);
+            case OR:
+                return new BitwiseOr(left, right);
         }
         return null;
     }
 
-    private MyExpression getVariable(String token) throws InvalidVariableException {
-        if (Operation.VARIABLES.contains(token)) {
-            return new Variable(token);
-        }
-        throw new InvalidVariableException(token, getParsingInfo());
+    private MyExpression parseVariable() {
+        skipWhitespace();
+        final String variable = Character.toString(ch);
+        nextChar();
+        return new Variable(variable);
     }
 
-    private MyExpression parseConst(boolean positive) throws ParsingException {
+    private MyExpression parseConst(boolean positive) {
         final StringBuilder sb = new StringBuilder();
         if (!positive) {
             sb.append('-');
@@ -120,18 +102,7 @@ public class ExpressionParser extends BaseParser implements Parser {
         try {
             return new Const(Integer.parseInt(sb.toString()));
         } catch (NumberFormatException e) {
-            throw new IllegalConstException(sb.toString(), getParsingInfo());
+            throw new AssertionError("Invalid number " + sb);
         }
-    }
-
-    private MyExpression buildUnaryOperation(MyExpression expr,
-                                             Operation operation) {
-        switch (operation) {
-            case SQRT:
-                return new CheckedSqrt(expr);
-            case ABS:
-                return new CheckedAbs(expr);
-        }
-        return null;
     }
 }

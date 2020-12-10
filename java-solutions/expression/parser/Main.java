@@ -11,13 +11,9 @@ import expression.exceptions.ZeroDivisionException;
 
 public class Main {
     public static void main(String[] args) {
-        ExpressionParser parser = new ExpressionParser(new StringSource("1000000*x*x*x*x*x/(x-1)"));
+        /*ExpressionParser parser = new ExpressionParser(new StringSource("1000000*x*x*x*x*x/(x-1)"));
         MyExpression result = null;
-        try {
-            result = parser.parseExpression();
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        }
+        result = parser.parseExpression();
         System.out.println("x f");
         for (int i = 0; i < 11; i++) {
             try {
@@ -27,6 +23,6 @@ public class Main {
             } catch (ZeroDivisionException e) {
                 System.out.println(i + " division by zero");
             }
-        }
+        }*/
     }
 }

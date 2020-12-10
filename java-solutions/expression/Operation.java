@@ -41,4 +41,11 @@ public enum Operation {
     public static final Map<String, Operation> STRING_TO_UNARY = Map.of(
             "sqrt", SQRT, "abs", ABS
     );
+
+    public static final Map<Character, Operation> CHAROPERANDS = Map.of(
+            '&', AND, '|', OR, '^', XOR,
+            '+', ADD, '-', SUB,
+            '*', MUL, '/', DIV
+    );
+
 }
