@@ -57,8 +57,6 @@ public class ExpressionParser extends BaseParser implements Parser {
             }
             return parsed;
         } else if (test('-')) {
-            // - 10
-            //skipWhitespace();
             if (between('0', '9')) {
                 return parseConst(false);
             }
