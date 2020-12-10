@@ -1,7 +1,5 @@
 package expression.parser;
 
-import expression.exceptions.ParsingException;
-
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
@@ -29,7 +27,7 @@ public class StringSource implements ExpressionSource {
     }
 
     @Override
-    public ParsingException error(final String message) {
+    public ExpressionException error(final String message) {
         return new ExpressionException(pos + ": " + message);
     }
 }
