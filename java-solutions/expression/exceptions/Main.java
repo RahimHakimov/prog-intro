@@ -1,11 +1,6 @@
 package expression.exceptions;
 
 import expression.MyExpression;
-import expression.exceptions.OverflowException;
-import expression.exceptions.ParsingException;
-import expression.exceptions.ZeroDivisionException;
-import expression.parser.ExpressionParser;
-import expression.parser.StringSource;
 
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
