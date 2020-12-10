@@ -12,6 +12,6 @@ public class ExpressionParser extends expression.parser.ExpressionParser impleme
     }
 
     public ExpressionParser() {
-        super();  // max length of binary operator
+        super();
     }
 }
