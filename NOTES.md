@@ -1,12 +1,11 @@
-```
-__current-repo\java-solutions\expression\parser\ExpressionParser.java:21: error: parse(String) in ExpressionParser cannot implement parse(String) in Parser
-    public MyExpression parse(String expression) throws ParsingException {
-                        ^
-  overridden method does not throw ParsingException
-__current-repo\java-solutions\expression\exceptions\ExpressionParser.java:9: error: parse(String) in ExpressionParser cannot implement parse(String) in Parser
-public class ExpressionParser extends expression.parser.ExpressionParser implements Parser {
-       ^
-  overridden method does not throw ParsingException
+__current-repo\java-solutions\expression\parser\BaseParser.java:53: error: incompatible types: ParsingException cannot be converted to ExpressionException
+return source.error(message);
+^
+__current-repo\java-solutions\expression\parser\StringSource.java:33: error: incompatible types: ExpressionException cannot be converted to ParsingException
+return new ExpressionException(pos + ": " + message);
+^
 2 errors
-
-```
+_current-repo\java-solutions\expression\parser\StringSource.java:33: error: incompatible types: ExpressionException cannot be converted to ParsingException
+return new ExpressionException(pos + ": " + message);
+^
+2 errors
