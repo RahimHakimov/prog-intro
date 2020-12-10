@@ -13,10 +13,10 @@ public class CheckedNegate extends Negate {
     }
 
     @Override
-    protected int calculate(int x) {
+    protected int resultOfOperation(int x) {
         if (x == Integer.MIN_VALUE) {
             throw new OverflowException();
         }
-        return -x;
+        return super.resultOfOperation(x);
     }
 }

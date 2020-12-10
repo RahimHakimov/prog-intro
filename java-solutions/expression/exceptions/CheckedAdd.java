@@ -15,7 +15,7 @@ public final class CheckedAdd extends Add {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        int res = x + y;
+        int res = super.resultOfOperation(x, y);
         if (y > 0 && x > 0 && res <= 0) {
             throw new OverflowException();
         }

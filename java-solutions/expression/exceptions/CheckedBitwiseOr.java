@@ -15,6 +15,6 @@ public final class CheckedBitwiseOr extends BitwiseOr {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        return x | y;
+        return super.resultOfOperation(x, y);
     }
 }

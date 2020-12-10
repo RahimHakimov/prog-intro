@@ -16,7 +16,7 @@ public final class CheckedSubtract extends Subtract {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        int res = x - y;
+        int res = super.resultOfOperation(x, y);
         if (x > 0 && y < 0 && res <= 0) {
             throw new OverflowException();
         }

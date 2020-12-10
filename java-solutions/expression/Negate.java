@@ -10,7 +10,7 @@ public class Negate extends UnaryOperation {
     }
 
     @Override
-    protected int calculate(int x) {
+    protected int resultOfOperation(int x) {
         return -x;
     }
 

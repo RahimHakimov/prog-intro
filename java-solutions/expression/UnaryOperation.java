@@ -13,16 +13,16 @@ public abstract class UnaryOperation implements MyExpression {
         this.cur = cur;
     }
 
-    protected abstract int calculate(int x);
+    protected abstract int resultOfOperation(int x);
 
     @Override
     public int evaluate(int x, int y, int z) {
-        return calculate(cur.evaluate(x, y, z));
+        return resultOfOperation(cur.evaluate(x, y, z));
     }
 
     @Override
     public int evaluate(int x) {
-        return calculate(cur.evaluate(x));
+        return resultOfOperation(cur.evaluate(x));
     }
 
     @Override

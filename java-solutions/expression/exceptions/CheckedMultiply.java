@@ -15,7 +15,7 @@ public final class CheckedMultiply extends Multiply {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        int res = x * y;
+        int res = super.resultOfOperation(x, y);
         if (x != 0 && y != 0 && (res / y != x || res / x != y)) {
             throw new OverflowException();
         }

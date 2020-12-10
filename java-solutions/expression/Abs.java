@@ -10,7 +10,7 @@ public class Abs extends UnaryOperation {
     }
 
     @Override
-    protected int calculate(int x) {
+    protected int resultOfOperation(int x) {
         return (x >= 0) ? x : -x;
     }
 

@@ -13,13 +13,13 @@ public class CheckedAbs extends Abs {
     }
 
     @Override
-    protected int calculate(int x) {
+    protected int resultOfOperation(int x) {
         if (x == Integer.MIN_VALUE) {
             throw new OverflowException();
         }
         if (x == Integer.MAX_VALUE) {
             throw new OverflowException();
         }
-        return (x >= 0) ? x : -x;
+        return super.resultOfOperation(x);
     }
 }

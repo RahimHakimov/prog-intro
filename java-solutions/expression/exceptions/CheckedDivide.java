@@ -21,6 +21,6 @@ public final class CheckedDivide extends Divide {
         if (y == -1 && x == Integer.MIN_VALUE) {
             throw new OverflowException();
         }
-        return x / y;
+        return super.resultOfOperation(x, y);
     }
 }

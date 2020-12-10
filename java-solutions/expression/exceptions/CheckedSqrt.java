@@ -13,12 +13,10 @@ public class CheckedSqrt extends Sqrt {
     }
 
     @Override
-    protected int calculate(int x) {
+    protected int resultOfOperation(int x) {
         if (x < 0) {
             throw new SqrtFromNegativeException();
         }
-        int i;
-        for (i = 0; i * i <= x; ++i) ;
-        return i - 1;
+        return super.resultOfOperation(x);
     }
 }

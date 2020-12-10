@@ -15,7 +15,7 @@ public final class CheckedBitwiseAnd extends BitwiseAnd {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        return x & y;
+        return super.resultOfOperation(x, y);
     }
 
 }
