@@ -10,5 +10,8 @@ _*
 #Do not store Test.java files
 *Test.java
 
+#Do not store Test.jar files
+*Test.jar
+
 #Do not store project files .iml
 *.iml
