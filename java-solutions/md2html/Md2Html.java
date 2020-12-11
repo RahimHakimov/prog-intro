@@ -9,14 +9,14 @@ import java.nio.charset.StandardCharsets;
 
 public class Md2Html {
     public static void main(String[] args) {
-        String inFile = args[0];
-        String outFile = args[1];
+        String inp = args[0];
+        String outp = args[1];
         try (
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(
                                 new FileInputStream(
-                                        new File(inFile)), StandardCharsets.UTF_8));
-                BufferedWriter out = new BufferedWriter(new FileWriter(outFile, StandardCharsets.UTF_8))
+                                        new File(inp)), StandardCharsets.UTF_8));
+                BufferedWriter out = new BufferedWriter(new FileWriter(outp, StandardCharsets.UTF_8))
         ) {
             String line = in.readLine();
             while (line != null) {
@@ -32,15 +32,15 @@ public class Md2Html {
                     line = in.readLine();
                 }
                 if (paragraph.length() > 0) {
-                    ParagraphConverter convertedParagraph = new ParagraphConverter(paragraph.toString());
-                    out.write(convertedParagraph.getResult().toString());
+                    Converter converted = new Converter(paragraph.toString());
+                    out.write(converted.convert().toString());
                     out.newLine();
                 }
             }
         } catch (FileNotFoundException e) {
-            System.err.println("File not found: " + e.getMessage());
+            System.err.println("File not found 404: " + e.getMessage());
         } catch (IOException e) {
-            System.err.println("I/O error: " + e.getMessage());
+            System.err.println("IO error: " + e.getMessage());
         }
     }
 }

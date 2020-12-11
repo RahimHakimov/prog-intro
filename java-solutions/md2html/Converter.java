@@ -6,7 +6,7 @@ import java.util.Map;
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
-public class ParagraphConverter {
+public class Converter {
     private final Map<String, String> md2htmlTags = Map.of("*", "em", "_", "em",
             "**", "strong", "__", "strong",
             "`", "code", "--", "s", "[", "<a href='",
@@ -14,9 +14,9 @@ public class ParagraphConverter {
     private final Map<Character, String> htmlSymbols = Map.of('<', "&lt;",
             '>', "&gt;", '&', "&amp;");
     private int ind;
-    private StringBuilder resLine;
+    private final StringBuilder resLine;
 
-    public ParagraphConverter(String paragraph) {
+    public Converter(String paragraph) {
         resLine = new StringBuilder();
         ind = 0;
         final int headerLevel = getHeaderLevel(paragraph);
@@ -34,7 +34,7 @@ public class ParagraphConverter {
         }
     }
 
-    public StringBuilder getResult() {
+    public StringBuilder convert() {
         return resLine;
     }
 
@@ -92,23 +92,22 @@ public class ParagraphConverter {
                     resLine.append(htmlSymbol);
             }
 
-            if (!mdTag.isEmpty() && mdTag.equals(lastTag)) {  // close last tag
+            if (!mdTag.isEmpty() && mdTag.equals(lastTag)) {
                 resLine.append("</").append(htmlTag).append(">");
                 return resLine;
             }
             ind++;
-            // parse link
             if (mdTag.equals("]") && lastTag.equals("[") && ind < line.length() && line.charAt(ind) == '(') {
                 StringBuilder link = new StringBuilder();
-                int endLinkInd = ind + 1;
-                while (endLinkInd < line.length() && line.charAt(endLinkInd) != ')') {
-                    link.append(line.charAt(endLinkInd));
-                    endLinkInd++;
+                int endIndex = ind + 1;
+                while (endIndex < line.length() && line.charAt(endIndex) != ')') {
+                    link.append(line.charAt(endIndex));
+                    endIndex++;
                 }
-                if (endLinkInd < line.length() && line.charAt(endLinkInd) == ')'
-                        && line.charAt(endLinkInd) != '[') {
+                if (endIndex < line.length() && line.charAt(endIndex) == ')'
+                        && line.charAt(endIndex) != '[') {
                     resLine.insert(0, md2htmlTags.get("[") + link + "'>").append(md2htmlTags.get("]"));
-                    ind = endLinkInd + 1;
+                    ind = endIndex + 1;
                     return resLine;
                 } else {
                     resLine.insert(0, "[");
@@ -116,9 +115,9 @@ public class ParagraphConverter {
                 }
             }
 
-            if (!mdTag.isEmpty()) { // parse after tag
+            if (!mdTag.isEmpty()) {
                 StringBuilder editedLine = nextTag(line, new StringBuilder(), mdTag);
-                if (editedLine.length() > htmlTag.length() &&  // check closing tag
+                if (editedLine.length() > htmlTag.length() &&
                         editedLine.substring(editedLine.length() - htmlTag.length() - 1,
                                 editedLine.length() - 1).equals(htmlTag)) {
                     resLine.append("<").append(htmlTag).append(">").append(editedLine);
