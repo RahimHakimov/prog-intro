@@ -14,28 +14,28 @@ public class Converter {
     private final Map<Character, String> htmlSymbols = Map.of('<', "&lt;",
             '>', "&gt;", '&', "&amp;");
     private int ind;
-    private final StringBuilder resLine;
+    private final StringBuilder result;
 
     public Converter(String paragraph) {
-        resLine = new StringBuilder();
+        result = new StringBuilder();
         ind = 0;
         final int headerLevel = getHeaderLevel(paragraph);
         if (headerLevel > 0) {
-            resLine.append("<h").append(headerLevel).append(">");
+            result.append("<h").append(headerLevel).append(">");
             ind = headerLevel + 1;
         } else {
-            resLine.append("<p>");
+            result.append("<p>");
         }
-        nextTag(paragraph, resLine, "");
+        nextTag(paragraph, result, "");
         if (headerLevel > 0) {
-            resLine.append("</h").append(headerLevel).append(">");
+            result.append("</h").append(headerLevel).append(">");
         } else {
-            resLine.append("</p>");
+            result.append("</p>");
         }
     }
 
     public StringBuilder convert() {
-        return resLine;
+        return result;
     }
 
     private int getHeaderLevel(String line) {
