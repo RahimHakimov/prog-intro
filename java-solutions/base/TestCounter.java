@@ -14,33 +14,9 @@ import java.util.jar.JarFile;
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
 public class TestCounter {
-    private long start = System.currentTimeMillis();
+    private final long start = System.currentTimeMillis();
     private int total = 0;
     private int passed = 0;
-
-    public void nextTest() {
-        total++;
-    }
-
-    public int getTest() {
-        return total;
-    }
-
-    public void passed() {
-        passed++;
-    }
-
-    public void printStatus(final Class<?> aClass) {
-        System.err.println("===========================================");
-        System.err.format("Test run: %d, passed: %d, failed: %d%n", total, passed, total - passed);
-        System.err.format("Finished in %d ms%n", System.currentTimeMillis() - start);
-        if (total != passed) {
-            System.err.println("TESTS FAILED");
-            System.exit(1);
-        }
-        System.err.println("Version: " + getVersion(aClass));
-    }
-
 
     public static String getVersion(final Class clazz) {
         try {
@@ -68,5 +44,28 @@ public class TestCounter {
         } catch (IOException | URISyntaxException e) {
             return "error: " + e.toString();
         }
+    }
+
+    public void nextTest() {
+        total++;
+    }
+
+    public int getTest() {
+        return total;
+    }
+
+    public void passed() {
+        passed++;
+    }
+
+    public void printStatus(final Class<?> aClass) {
+        System.err.println("===========================================");
+        System.err.format("Test run: %d, passed: %d, failed: %d%n", total, passed, total - passed);
+        System.err.format("Finished in %d ms%n", System.currentTimeMillis() - start);
+        if (total != passed) {
+            System.err.println("TESTS FAILED");
+            System.exit(1);
+        }
+        System.err.println("Version: " + getVersion(aClass));
     }
 }

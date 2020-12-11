@@ -16,35 +16,34 @@ public class Managing {
             final Map<Integer, Integer> cnts = new HashMap<>();
             int n = in.nextNumber();
             int[] a = new int[n];
-            for (int i = 0; i<n; ++i) {
+            for (int i = 0; i < n; ++i) {
                 a[i] = in.nextNumber();
             }
             int answer = 0;
             for (int i = n; i > 0; --i) {
-                for (int j = 0; j < i-1; ++j) {
-                    answer += cnts.getOrDefault(2 * a[i-1] - a[j], 0);
+                for (int j = 0; j < i - 1; ++j) {
+                    answer += cnts.getOrDefault(2 * a[i - 1] - a[j], 0);
                 }
-                if (cnts.containsKey(a[i-1])) {
+                if (cnts.containsKey(a[i - 1])) {
                     cnts.put(a[i - 1], cnts.get(a[i - 1]) + 1);
-                }
-                else {
-                    cnts.put(a[i-1], 1);
+                } else {
+                    cnts.put(a[i - 1], 1);
                 }
             }
-            out.write(answer+"\n");
+            out.write(answer + "\n");
             out.flush();
         }
     }
+
     public static class MyScan {
         private final BufferedReader source;
         private int currentIndex = 0;
         private int currentSize = 0;
+        private final char[] buffer = new char[1024];
 
         public MyScan(InputStream input) {
             source = new BufferedReader(new InputStreamReader(input));
         }
-
-        private char[] buffer = new char[1024];
 
         boolean hasNext() throws IOException {
             while (currentSize <= currentIndex && currentSize != -1) {

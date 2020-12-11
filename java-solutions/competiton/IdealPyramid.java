@@ -14,40 +14,40 @@ public class IdealPyramid {
         long maxX = Long.MIN_VALUE;
         long minY = Long.MAX_VALUE;
         long maxY = Long.MIN_VALUE;
-        for(int i = 0; i<n; i++){
+        for (int i = 0; i < n; i++) {
             int x = in.nextNumber();
             int y = in.nextNumber();
             int h = in.nextNumber();
-            if (x-h<minX) {
-                minX = x-h;
+            if (x - h < minX) {
+                minX = x - h;
             }
-            if (x+h>maxX) {
-                maxX = x+h;
+            if (x + h > maxX) {
+                maxX = x + h;
             }
-            if (y-h<minY) {
-                minY = y-h;
+            if (y - h < minY) {
+                minY = y - h;
             }
-            if (y+h>maxY) {
-                maxY = y+h;
+            if (y + h > maxY) {
+                maxY = y + h;
             }
         }
-        long maxx = maxY-minY;
-        if (maxX-minX > maxx) {
-            maxx = maxX-minX;
+        long maxx = maxY - minY;
+        if (maxX - minX > maxx) {
+            maxx = maxX - minX;
         }
-        out.write((maxX+minX)/2+" "+(maxY +minY)/2+" "+(maxx+1)/2+"\n");
+        out.write((maxX + minX) / 2 + " " + (maxY + minY) / 2 + " " + (maxx + 1) / 2 + "\n");
         out.flush();
     }
+
     public static class MyScan {
         private final BufferedReader source;
         private int currentIndex = 0;
         private int currentSize = 0;
+        private final char[] buffer = new char[1024];
 
         public MyScan(InputStream input) {
             source = new BufferedReader(new InputStreamReader(input));
         }
-
-        private char[] buffer = new char[1024];
 
         boolean hasNext() throws IOException {
             while (currentSize <= currentIndex && currentSize != -1) {

@@ -114,12 +114,11 @@ public class KingsChildren {
         private final BufferedReader source;
         private int currentIndex = 0;
         private int currentSize = 0;
+        private final char[] buffer = new char[1024];
 
         public MyScan(InputStream input) {
             source = new BufferedReader(new InputStreamReader(input));
         }
-
-        private char[] buffer = new char[1024];
 
         boolean hasNext() throws IOException {
             while (currentSize <= currentIndex && currentSize != -1) {

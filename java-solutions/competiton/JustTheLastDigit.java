@@ -17,7 +17,7 @@ public class JustTheLastDigit {
             for (int j = i + 1; j < n; j++) {
                 if (counter[i][j] > 0) {
                     for (int k = j + 1; k < n; k++) {
-                        int x = counter[i][k]^counter[j][k];
+                        int x = counter[i][k] ^ counter[j][k];
                         counter[i][k] = x;
                     }
                 }
@@ -25,22 +25,22 @@ public class JustTheLastDigit {
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                out.write(""+counter[i][j]);
+                out.write("" + counter[i][j]);
             }
             out.write("\n");
         }
         out.flush();
     }
+
     public static class MyScan {
         private final BufferedReader source;
         private int currentIndex = 0;
         private int currentSize = 0;
+        private final char[] buffer = new char[1024];
 
         public MyScan(InputStream input) {
             source = new BufferedReader(new InputStreamReader(input));
         }
-
-        private char[] buffer = new char[1024];
 
         boolean hasNext() throws IOException {
             while (currentSize <= currentIndex && currentSize != -1) {

@@ -7,10 +7,10 @@ package game;
 public class Match {
     public final Player player1;
     public final Player player2;
+    public final int numberOfGames;
     public boolean log;
     public int numOfWins1 = 0;
     public int numOfWins2 = 0;
-    public final int numberOfGames;
 
 
     public Match(final boolean log, Player player1, Player player2, int numberOfGames) {

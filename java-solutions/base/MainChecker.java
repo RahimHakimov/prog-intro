@@ -15,8 +15,8 @@ import java.util.stream.Stream;
  */
 public class MainChecker extends Randomized {
     public static final String ENCODING = "utf8";
-    private final Method method;
     protected final TestCounter counter = new TestCounter();
+    private final Method method;
 
     public MainChecker(final String className) {
         try {

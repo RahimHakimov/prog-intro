@@ -10,6 +10,10 @@ public class CrossStitch {
     public static Map<CrsStitch, List<CrsStitch>> backSide = new HashMap<>();
     public static List<CrsStitch> answer = new ArrayList<>();
 
+    public static void main(String[] args) throws Exception {
+        new solution();
+    }
+
     public static class CrsStitch {
         int row, clmn;
 
@@ -89,6 +93,7 @@ public class CrossStitch {
                 answer.add(temp);
             }
         }
+
         void check(CrsStitch coord1, CrsStitch coord2, boolean whichSide) {
             if (whichSide) {
                 if (!frontSide.containsKey(coord1))
@@ -97,7 +102,7 @@ public class CrossStitch {
                 if (!frontSide.containsKey(coord2))
                     frontSide.put(coord2, new ArrayList<>());
                 frontSide.get(coord2).add(coord1);
-            }else {
+            } else {
                 if (!backSide.containsKey(coord1))
                     backSide.put(coord1, new ArrayList<>());
                 backSide.get(coord1).add(coord2);
@@ -108,20 +113,15 @@ public class CrossStitch {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        new solution();
-    }
-
     public static class MyScan {
         private final BufferedReader source;
         private int currentIndex = 0;
         private int currentSize = 0;
+        private final char[] buffer = new char[1024];
 
         public MyScan(InputStream input) {
             source = new BufferedReader(new InputStreamReader(input));
         }
-
-        private char[] buffer = new char[1024];
 
         boolean hasNext() throws IOException {
             while (currentSize <= currentIndex && currentSize != -1) {

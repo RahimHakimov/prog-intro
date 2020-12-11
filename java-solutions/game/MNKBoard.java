@@ -8,10 +8,9 @@ import java.util.Map;
  */
 public class MNKBoard implements Board, Position {
     private final Cell emptyCell = Cell.E;
-    private Map<Cell, Character> SYMBOLS;
-
     private final Cell[][] cells;
     private final int k;
+    private final Map<Cell, Character> SYMBOLS;
     private int notEmpty = 0;
     private Cell turn;
 

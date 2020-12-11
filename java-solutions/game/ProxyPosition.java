@@ -5,7 +5,7 @@ package game;
  */
 
 public class ProxyPosition implements Position {
-    private Position position;
+    private final Position position;
 
     ProxyPosition(Position board) {
         this.position = board;

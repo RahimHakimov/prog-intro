@@ -10,17 +10,17 @@ public class SumLong {
                     currentStringNumber += args[i].charAt(j);
                 }
                 if (Character.isWhitespace(args[i].charAt(j))) {
-                    if (currentStringNumber.length()>0){
-		            numbersSum += Long.parseLong(currentStringNumber);
-		            //System.err.println(currentStringNumber);
-		            currentStringNumber = "";
-		     }
+                    if (currentStringNumber.length() > 0) {
+                        numbersSum += Long.parseLong(currentStringNumber);
+                        //System.err.println(currentStringNumber);
+                        currentStringNumber = "";
+                    }
                 }
             }
-            if (currentStringNumber.length()>0){
-	            numbersSum += Long.parseLong(currentStringNumber);
-	    }
-        }	
+            if (currentStringNumber.length() > 0) {
+                numbersSum += Long.parseLong(currentStringNumber);
+            }
+        }
         System.out.println(numbersSum);
     }
 }
