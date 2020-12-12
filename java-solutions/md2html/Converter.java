@@ -9,8 +9,7 @@ import java.util.Map;
 public class Converter {
     private final Map<String, String> md2htmlTags = Map.of("*", "em", "_", "em",
             "**", "strong", "__", "strong",
-            "`", "code", "--", "s", "[", "<a href='",
-            "]", "</a>");
+            "`", "code", "--", "s");
     private final Map<Character, String> htmlSymbols = Map.of('<', "&lt;",
             '>', "&gt;", '&', "&amp;");
     private int ind;
@@ -55,8 +54,6 @@ public class Converter {
         while (ind < line.length()) {
             char curChar = line.charAt(ind);
             switch (curChar) {
-                case '[':
-                case ']':
                 case '`':
                     mdTag = Character.toString(curChar);
                     htmlTag = md2htmlTags.get(mdTag);
@@ -97,24 +94,6 @@ public class Converter {
                 return resLine;
             }
             ind++;
-            if (mdTag.equals("]") && lastTag.equals("[") && ind < line.length() && line.charAt(ind) == '(') {
-                StringBuilder link = new StringBuilder();
-                int endIndex = ind + 1;
-                while (endIndex < line.length() && line.charAt(endIndex) != ')') {
-                    link.append(line.charAt(endIndex));
-                    endIndex++;
-                }
-                if (endIndex < line.length() && line.charAt(endIndex) == ')'
-                        && line.charAt(endIndex) != '[') {
-                    resLine.insert(0, md2htmlTags.get("[") + link + "'>").append(md2htmlTags.get("]"));
-                    ind = endIndex + 1;
-                    return resLine;
-                } else {
-                    resLine.insert(0, "[");
-                    System.out.println(resLine.toString());
-                }
-            }
-
             if (!mdTag.isEmpty()) {
                 StringBuilder editedLine = nextTag(line, new StringBuilder(), mdTag);
                 if (editedLine.length() > htmlTag.length() &&
