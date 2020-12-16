@@ -9,7 +9,7 @@ import java.util.Map;
 public class Converter {
     private final Map<String, String> md2htmlTags = Map.of("*", "em", "_", "em",
             "**", "strong", "__", "strong",
-            "`", "code", "--", "s");
+            "`", "code", "--", "s", "~", "mark");
     private final Map<Character, String> htmlSymbols = Map.of('<', "&lt;",
             '>', "&gt;", '&', "&amp;");
     private int ind;
@@ -54,6 +54,7 @@ public class Converter {
         while (ind < line.length()) {
             char curChar = line.charAt(ind);
             switch (curChar) {
+                case '~':
                 case '`':
                     mdTag = Character.toString(curChar);
                     htmlTag = md2htmlTags.get(mdTag);
