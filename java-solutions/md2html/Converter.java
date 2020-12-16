@@ -103,9 +103,7 @@ public class Converter {
                     resLine.append("<").append(htmlTag).append(">").append(editedLine);
                     ind++;
                 } else {
-                    if (!mdTag.equals("[")) {
-                        resLine.append(mdTag);
-                    }
+                    resLine.append(mdTag);
                     resLine.append(editedLine);
                 }
                 mdTag = "";
