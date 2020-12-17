@@ -17,9 +17,6 @@ public class CheckedAbs extends Abs {
         if (x == Integer.MIN_VALUE) {
             throw new OverflowException();
         }
-        if (x == Integer.MAX_VALUE) {
-            throw new OverflowException();
-        }
         return super.resultOfOperation(x);
     }
 }

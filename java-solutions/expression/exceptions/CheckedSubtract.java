@@ -16,16 +16,12 @@ public final class CheckedSubtract extends Subtract {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        int res = super.resultOfOperation(x, y);
-        if (x > 0 && y < 0 && res <= 0) {
+        if (y < 0 && Integer.MAX_VALUE + y < x) {
             throw new OverflowException();
         }
-        if (x < 0 && y > 0 && res >= 0) {
+        if (y > 0 && (Integer.MIN_VALUE + y > x)) {
             throw new OverflowException();
         }
-        if (x == 0 && y == Integer.MIN_VALUE) {
-            throw new OverflowException();
-        }
-        return res;
+        return super.resultOfOperation(x, y);
     }
 }

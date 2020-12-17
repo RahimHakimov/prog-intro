@@ -15,13 +15,12 @@ public final class CheckedAdd extends Add {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        int res = super.resultOfOperation(x, y);
-        if (y > 0 && x > 0 && res <= 0) {
+        if (y > 0 && (Integer.MIN_VALUE - y < x)) {
             throw new OverflowException();
         }
-        if (y < 0 && x < 0 && res >= 0) {
+        if (y < 0 && (Integer.MAX_VALUE - y > x)) {
             throw new OverflowException();
         }
-        return res;
+        return super.resultOfOperation(x, y);
     }
 }
