@@ -13,7 +13,8 @@ public class Main {
         try {
             result = parser.parseExpression();
         } catch (ParsingException e) {
-            e.printStackTrace();
+            /*e.printStackTrace();*/
+            System.out.println(e.getMessage());
         }
         System.out.println("x f");
         for (int i = 0; i < 11; i++) {
