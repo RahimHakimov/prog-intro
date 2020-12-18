@@ -115,9 +115,9 @@ public class CrossStitch {
 
     public static class MyScan {
         private final BufferedReader source;
+        private final char[] buffer = new char[1024];
         private int currentIndex = 0;
         private int currentSize = 0;
-        private final char[] buffer = new char[1024];
 
         public MyScan(InputStream input) {
             source = new BufferedReader(new InputStreamReader(input));
