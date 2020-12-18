@@ -30,18 +30,6 @@ public abstract class UnaryOperation implements MyExpression {
         return "(" + getOperationType() + cur + ")";
     }
 
-    @Override
-    public String toMiniString() {
-        StringBuilder sb = new StringBuilder();
-
-        if (this.isValuable()) {
-            sb.append("(").append(getOperationType()).append(cur.toMiniString()).append(")");
-        } else {
-            sb.append(getOperationType()).append(cur.toMiniString());
-        }
-        return sb.toString();
-    }
-
     protected abstract String getOperationType();
 
     @Override

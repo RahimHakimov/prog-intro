@@ -9,11 +9,11 @@ import expression.*;
 public class ExpressionParser extends BaseParser implements expression.exceptions.Parser {
 
     public ExpressionParser(StringSource stringSource) {
-        super(stringSource, 2);
+        super(stringSource);
     }
 
     public ExpressionParser() {
-        super(2);
+        super();
     }
 
     @Override
@@ -21,7 +21,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         changeSource(new StringSource(expression));
         MyExpression result = parseExpression();
         if (hasNext() && ch != '\0') {
-            throw new MissingOpeningParenthesis(getParsingInfo());
+            throw new MissingOpeningParenthesis(getInfo());
         }
         return result;
     }
@@ -52,7 +52,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
             MyExpression parsed = parseExpression();
             skipWhitespace();
             if (!expect(')')) {
-                throw new MissingClosingParenthesis(getParsingInfo());
+                throw new MissingClosingParenthesis(getInfo());
             }
             return parsed;
         } else if (test('-')) {
@@ -64,7 +64,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
             return parseConst(true);
         } else {
             String unaryOperationOrVariable = parseToken();
-            Operation operation = Operation.STRING_TO_UNARY.get(unaryOperationOrVariable);
+            Operation operation = Operation.STRING_TO_UNARY_OPERATION.get(unaryOperationOrVariable);
             if (operation != null) {
                 return buildUnaryOperation(parseValue(), operation);
             }
@@ -107,7 +107,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         if (Operation.VARIABLES.contains(token)) {
             return new Variable(token);
         }
-        throw new InvalidVariableException(token, getParsingInfo());
+        throw new InvalidVariableException(token, getInfo());
     }
 
     private MyExpression parseConst(boolean positive) throws ParsingException {
@@ -119,7 +119,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         try {
             return new Const(Integer.parseInt(sb.toString()));
         } catch (NumberFormatException e) {
-            throw new IllegalConstException(sb.toString(), getParsingInfo());
+            throw new IllegalConstException(sb.toString(), getInfo());
         }
     }
 

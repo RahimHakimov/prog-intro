@@ -12,26 +12,22 @@ public class BaseParser {
     private int size = 0;
     private int pos = 0;
 
-    protected BaseParser(final ExpressionSource source, final int bufferLength) {
+    protected BaseParser(final ExpressionSource source/*, final int bufferLength*/) {
         this.source = source;
-        buffer = new char[bufferLength];
-        updateBuffer();
+        buffer = new char[2002];
+        bufferUpdate();
     }
 
-    protected BaseParser(final ExpressionSource source) {
-        this(source, 1);
+    protected BaseParser() {
+        buffer = new char[2002];
     }
 
-    protected BaseParser(final int bufferLength) {
-        buffer = new char[bufferLength];
-    }
-
-    private void updateBuffer() {
-        while (source.hasNext() && size < buffer.length) {
-            buffer[(head + size) % buffer.length] = source.next();
+    private void bufferUpdate() {
+        while (source.hasNext() && size < 2002) {
+            buffer[(head + size) % 2002] = source.next();
             size++;
         }
-        ch = size > 0 ? buffer[head % buffer.length] : '\0';
+        ch = size > 0 ? buffer[head % 2002] : '\0';
     }
 
     protected void changeSource(final ExpressionSource source) {
@@ -40,16 +36,16 @@ public class BaseParser {
         size = 0;
         head = 0;
 
-        updateBuffer();
+        bufferUpdate();
     }
 
     protected void nextChar() {
-        ch = size > 0 ? buffer[(head + 1) % buffer.length] : '\0';
+        ch = size > 0 ? buffer[(head + 1) % 2002] : '\0';
         if (size > 0) {
             pos++;
             size--;
-            head = (head + 1) % buffer.length;
-            updateBuffer();
+            head = (head + 1) % 2002;
+            bufferUpdate();
         }
     }
 
@@ -75,18 +71,18 @@ public class BaseParser {
     }
 
     protected boolean test(String expected) {
-        updateBuffer();
+        bufferUpdate();
         if (size >= expected.length()) {
             int ind = 0;
             while (ind < expected.length()) {
-                if (expected.charAt(ind) != buffer[(head + ind) % buffer.length]) {
+                if (expected.charAt(ind) != buffer[(head + ind) % 2002]) {
                     return false;
                 }
                 ind++;
             }
-            head = (head + ind) % buffer.length;
+            head = (head + ind) % 2002;
             size -= ind;
-            updateBuffer();
+            bufferUpdate();
             return true;
         }
         return false;
@@ -109,7 +105,7 @@ public class BaseParser {
         return true;
     }
 
-    protected String getParsingInfo() {
+    protected String getInfo() {
         return "Current pos: " + pos + " Current part: " + source.partOfSource();
     }
 

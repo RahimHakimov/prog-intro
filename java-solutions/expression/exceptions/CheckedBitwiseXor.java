@@ -13,8 +13,4 @@ public final class CheckedBitwiseXor extends BitwiseXor {
         super(first, second);
     }
 
-    @Override
-    protected int resultOfOperation(int x, int y) {
-        return super.resultOfOperation(x, y);
-    }
 }

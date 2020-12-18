@@ -38,7 +38,7 @@ public enum Operation {
             List.of(CONST, VAR)
     );
 
-    public static final Map<String, Operation> STRING_TO_UNARY = Map.of(
+    public static final Map<String, Operation> STRING_TO_UNARY_OPERATION = Map.of(
             "sqrt", SQRT, "abs", ABS
     );
 

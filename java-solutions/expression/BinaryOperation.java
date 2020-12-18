@@ -33,30 +33,6 @@ public abstract class BinaryOperation implements MyExpression {
         return "(" + first + " " + getOperationType + " " + second + ")";
     }
 
-    private boolean requireBrackets(MyExpression expr) {
-        return expr.getPriority() < this.getPriority() ||
-                expr.getPriority() == this.getPriority() &&
-                        (expr.isValuable() || this.isValuable());
-    }
-
-    @Override
-    public String toMiniString() {
-        StringBuilder sb = new StringBuilder();
-        MyExpression op = this.first;
-        termToString(sb, op, op.getPriority() < this.getPriority());
-        sb.append(" ").append(getOperationType).append(" ");
-        termToString(sb, second, requireBrackets(second));
-        return sb.toString();
-    }
-
-    private void termToString(StringBuilder sb, MyExpression op, boolean brackets) {
-        if (brackets) {
-            sb.append("(").append(op.toMiniString()).append(")");
-        } else {
-            sb.append(op.toMiniString());
-        }
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(first, second, this.getClass());
