@@ -9,7 +9,7 @@ public interface ExpressionSource {
 
     char next();
 
-    String getPart();
-
     ParsingException error(final String message);
+
+    String partOfSource();
 }

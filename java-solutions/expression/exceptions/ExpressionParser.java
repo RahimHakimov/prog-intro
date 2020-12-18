@@ -56,8 +56,6 @@ public class ExpressionParser extends BaseParser implements expression.exception
             }
             return parsed;
         } else if (test('-')) {
-            // - 10
-            //skipWhitespace();
             if (between('0', '9')) {
                 return parseConst(false);
             }
@@ -65,12 +63,12 @@ public class ExpressionParser extends BaseParser implements expression.exception
         } else if (between('0', '9')) {
             return parseConst(true);
         } else {
-            String token = parseToken();
-            Operation operation = Operation.STRING_TO_UNARY.get(token);
+            String unaryOperationOrVariable = parseToken();
+            Operation operation = Operation.STRING_TO_UNARY.get(unaryOperationOrVariable);
             if (operation != null) {
                 return buildUnaryOperation(parseValue(), operation);
             }
-            return getVariable(token);
+            return getVariable(unaryOperationOrVariable);
         }
     }
 

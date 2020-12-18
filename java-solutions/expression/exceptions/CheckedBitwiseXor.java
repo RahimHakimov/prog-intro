@@ -15,9 +15,6 @@ public final class CheckedBitwiseXor extends BitwiseXor {
 
     @Override
     protected int resultOfOperation(int x, int y) {
-        int res = super.resultOfOperation(x, y);
-        if (res == Integer.MAX_VALUE || res == Integer.MIN_VALUE)
-            throw new OverflowException();
-        return res;
+        return super.resultOfOperation(x, y);
     }
 }

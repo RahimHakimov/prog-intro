@@ -26,11 +26,6 @@ public class BaseParser {
         buffer = new char[bufferLength];
     }
 
-    private void flushBuffer() {
-        size = 0;
-        head = 0;
-    }
-
     private void updateBuffer() {
         while (source.hasNext() && size < buffer.length) {
             buffer[(head + size) % buffer.length] = source.next();
@@ -41,7 +36,10 @@ public class BaseParser {
 
     protected void changeSource(final ExpressionSource source) {
         this.source = source;
-        flushBuffer();
+
+        size = 0;
+        head = 0;
+
         updateBuffer();
     }
 
@@ -112,7 +110,7 @@ public class BaseParser {
     }
 
     protected String getParsingInfo() {
-        return "Current pos: " + pos + " Current part: " + source.getPart();
+        return "Current pos: " + pos + " Current part: " + source.partOfSource();
     }
 
     protected ParsingException error(final String message) {

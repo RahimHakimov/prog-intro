@@ -14,9 +14,11 @@ public class CheckedNegate extends Negate {
 
     @Override
     protected int resultOfOperation(int x) {
+
         if (x == Integer.MIN_VALUE) {
             throw new OverflowException();
         }
+
         return super.resultOfOperation(x);
     }
 }

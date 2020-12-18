@@ -6,6 +6,6 @@ package expression.exceptions;
 
 public class SqrtFromNegativeException extends EvaluatingException {
     public SqrtFromNegativeException() {
-        super("Sqrt from negative");
+        super("Sqrt from negative number");
     }
 }

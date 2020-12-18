@@ -15,12 +15,15 @@ public final class CheckedDivide extends Divide {
 
     @Override
     protected int resultOfOperation(int x, int y) {
+
         if (y == 0) {
             throw new ZeroDivisionException();
         }
+
         if (y == -1 && x == Integer.MIN_VALUE) {
             throw new OverflowException();
         }
+
         return super.resultOfOperation(x, y);
     }
 }

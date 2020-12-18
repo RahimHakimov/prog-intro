@@ -14,9 +14,11 @@ public class CheckedSqrt extends Sqrt {
 
     @Override
     protected int resultOfOperation(int x) {
+
         if (x < 0) {
             throw new SqrtFromNegativeException();
         }
+
         return super.resultOfOperation(x);
     }
 }
