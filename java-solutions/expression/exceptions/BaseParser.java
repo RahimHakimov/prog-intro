@@ -10,9 +10,9 @@ public class BaseParser {
     private ExpressionSource source;
     private int head = 0;
     private int size = 0;
-    private int pos = 0;
+    private int position = 0;
 
-    protected BaseParser(final ExpressionSource source/*, final int bufferLength*/) {
+    protected BaseParser(final ExpressionSource source) {
         this.source = source;
         buffer = new char[2002];
         bufferUpdate();
@@ -42,7 +42,7 @@ public class BaseParser {
     protected void nextChar() {
         ch = size > 0 ? buffer[(head + 1) % 2002] : '\0';
         if (size > 0) {
-            pos++;
+            position++;
             size--;
             head = (head + 1) % 2002;
             bufferUpdate();
@@ -106,7 +106,7 @@ public class BaseParser {
     }
 
     protected String getInfo() {
-        return "Current pos: " + pos + " Current part: " + source.partOfSource();
+        return "Current pos: " + position + " Current part: " + source.partOfSource();
     }
 
     protected ParsingException error(final String message) {

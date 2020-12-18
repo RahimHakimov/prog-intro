@@ -37,7 +37,7 @@ public class ExpressionParser extends BaseParser implements Parser {
 
         while (true) {
             skipWhitespace();
-            final Operation curOperation = Operation.CHAROPERANDS.get(ch);
+            final Operation curOperation = Operation.CHAR_OPERANDS.get(ch);
             if (curOperation == null || priority != Operation.PRIORITIES.get(curOperation)) {
                 return parsed;
             }

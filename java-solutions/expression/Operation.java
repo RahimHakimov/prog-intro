@@ -28,7 +28,7 @@ public enum Operation {
             "x", "y", "z"
     );
 
-    public static final List<List<Operation>> PRIORITY_TO_OPER = List.of(
+    public static final List<List<Operation>> PRIORITY_TO_OPERATION = List.of(
             List.of(OR),
             List.of(XOR),
             List.of(AND),
@@ -42,7 +42,7 @@ public enum Operation {
             "sqrt", SQRT, "abs", ABS
     );
 
-    public static final Map<Character, Operation> CHAROPERANDS = Map.of(
+    public static final Map<Character, Operation> CHAR_OPERANDS = Map.of(
             '&', AND, '|', OR, '^', XOR,
             '+', ADD, '-', SUB,
             '*', MUL, '/', DIV

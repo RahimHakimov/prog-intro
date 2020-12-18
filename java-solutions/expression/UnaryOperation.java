@@ -27,14 +27,14 @@ public abstract class UnaryOperation implements MyExpression {
 
     @Override
     public String toString() {
-        return "(" + getOperationType() + cur + ")";
+        return "(" + getOperationString() + cur + ")";
     }
 
-    protected abstract String getOperationType();
+    protected abstract String getOperationString();
 
     @Override
     public int hashCode() {
-        return Objects.hash(cur, getOperationType());
+        return Objects.hash(cur, getOperationString());
     }
 
     @Override
@@ -42,7 +42,7 @@ public abstract class UnaryOperation implements MyExpression {
         if (obj instanceof UnaryOperation) {
             UnaryOperation newOperation = (UnaryOperation) obj;
             return Objects.equals(cur, newOperation.cur)
-                    && Objects.equals(getOperationType(), newOperation.getOperationType());
+                    && Objects.equals(getOperationString(), newOperation.getOperationString());
         }
         return false;
     }

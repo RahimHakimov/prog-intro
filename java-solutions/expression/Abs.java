@@ -15,7 +15,7 @@ public class Abs extends UnaryOperation {
     }
 
     @Override
-    protected String getOperationType() {
+    protected String getOperationString() {
         return "abs";
     }
 

@@ -15,7 +15,7 @@ public class Negate extends UnaryOperation {
     }
 
     @Override
-    protected String getOperationType() {
+    protected String getOperationString() {
         return "-";
     }
 

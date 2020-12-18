@@ -74,7 +74,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private Operation getBinaryOperator(int priority) {
         skipWhitespace();
-        for (Operation operation : Operation.PRIORITY_TO_OPER.get(priority)) {
+        for (Operation operation : Operation.PRIORITY_TO_OPERATION.get(priority)) {
             if (test(Operation.OPERATORS_STRING.get(operation))) {
                 return operation;
             }
