@@ -11,7 +11,6 @@ public class BaseParser {
     private ExpressionSource source;
     private int head = 0;
     private int size = 0;
-    private int position = 0;
 
     protected BaseParser(final ExpressionSource source) {
         this.source = source;
@@ -42,7 +41,6 @@ public class BaseParser {
 
     protected void nextChar() {
         if (size > 0) {
-            position++;
             size--;
             head = (head + 1) % 2002;
             ch = buffer[(head + 1) % 2002];
@@ -59,33 +57,6 @@ public class BaseParser {
     protected boolean test(char expected) {
         if (ch == expected) {
             nextChar();
-            return true;
-        }
-        return false;
-    }
-
-    protected String parseToken() {
-        StringBuilder parsed = new StringBuilder();
-        while (between('0', '9') || between('A', 'z')) {
-            parsed.append(ch);
-            nextChar();
-        }
-        return parsed.toString();
-    }
-
-    protected boolean test(String expected) {
-        bufferUpdate();
-        if (size >= expected.length()) {
-            int ind = 0;
-            while (ind < expected.length()) {
-                if (expected.charAt(ind) != buffer[(head + ind) % 2002]) {
-                    return false;
-                }
-                ind++;
-            }
-            head = (head + ind) % 2002;
-            size -= ind;
-            bufferUpdate();
             return true;
         }
         return false;
@@ -109,7 +80,7 @@ public class BaseParser {
     }
 
     protected String getInfo() {
-        return "Current pos: " + position + " Current part: " + source.partOfSource();
+        return " Current part: " + source.partOfSource();
     }
 
     protected ParsingException error(final String message) {

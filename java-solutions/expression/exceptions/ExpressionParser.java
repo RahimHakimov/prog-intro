@@ -73,6 +73,16 @@ public class ExpressionParser extends BaseParser implements expression.exception
     }
 
 
+    protected String parseToken() {
+        StringBuilder parsed = new StringBuilder();
+        while (between('0', '9') || between('A', 'z')) {
+            parsed.append(ch);
+            nextChar();
+        }
+        return parsed.toString();
+    }
+
+
     private MyExpression parseVariable(String variable) throws InvalidVariableException {
         if (InformationAboutOperations.VARIABLES.contains(variable)) {
             return new Variable(variable);
@@ -107,7 +117,17 @@ public class ExpressionParser extends BaseParser implements expression.exception
     private Operation getBinaryOperator(int priority) {
         skipWhitespace();
         for (Operation operation : InformationAboutOperations.PRIORITY_TO_OPERATION.get(priority)) {
-            if (test(InformationAboutOperations.OPERATORS_STRING.get(operation))) {
+            String operator = InformationAboutOperations.OPERATORS_STRING.get(operation);
+            boolean check = true;
+            int ind = 0;
+            while (ind < operator.length()) {
+                if (!test(operator.charAt(ind))) {
+                    check = false;
+                    break;
+                }
+                ind++;
+            }
+            if (check) {
                 return operation;
             }
         }
