@@ -28,21 +28,21 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     public MyExpression parseExpression() throws ParsingException {
         skipWhitespace();
-        return parseTerm(0);
+        return parseExpressionPart(0);
     }
 
-    private MyExpression parseTerm(int priority) throws ParsingException {
+    private MyExpression parseExpressionPart(int priority) throws ParsingException {
         skipWhitespace();
         if (priority == InformationAboutOperations.PRIORITIES.get(Operation.CONST)) {
             return parseValue();
         }
-        MyExpression parsed = parseTerm(priority + 1);
+        MyExpression parsed = parseExpressionPart(priority + 1);
         while (true) {
             Operation curOperation = getBinaryOperator(priority);
             if (curOperation == null) {
                 return parsed;
             }
-            parsed = buildBinaryOperation(parsed, parseTerm(priority + 1), curOperation);
+            parsed = buildBinaryOperation(parsed, parseExpressionPart(priority + 1), curOperation);
         }
     }
 
@@ -57,18 +57,18 @@ public class ExpressionParser extends BaseParser implements expression.exception
             return parsed;
         } else if (test('-')) {
             if (between('0', '9')) {
-                return parseConst(false);
+                return parseConst(true);
             }
             return new Negate(parseValue());
         } else if (between('0', '9')) {
-            return parseConst(true);
+            return parseConst(false);
         } else {
-            String unaryOperationOrVariable = parseToken();
-            Operation operation = InformationAboutOperations.STRING_TO_UNARY_OPERATION.get(unaryOperationOrVariable);
+            String parsedToken = parseToken();
+            Operation operation = InformationAboutOperations.STRING_TO_UNARY_OPERATION.get(parsedToken);
             if (operation != null) {
                 return buildUnaryOperation(parseValue(), operation);
             }
-            return getVariable(unaryOperationOrVariable);
+            return getVariable(parsedToken);
         }
     }
 
@@ -103,16 +103,16 @@ public class ExpressionParser extends BaseParser implements expression.exception
         return null;
     }
 
-    private MyExpression getVariable(String token) throws InvalidVariableException {
-        if (InformationAboutOperations.VARIABLES.contains(token)) {
-            return new Variable(token);
+    private MyExpression getVariable(String variable) throws InvalidVariableException {
+        if (InformationAboutOperations.VARIABLES.contains(variable)) {
+            return new Variable(variable);
         }
-        throw new InvalidVariableException(token, getInfo());
+        throw new InvalidVariableException(variable, getInfo());
     }
 
-    private MyExpression parseConst(boolean positive) throws ParsingException {
+    private MyExpression parseConst(boolean negative) throws ParsingException {
         final StringBuilder sb = new StringBuilder();
-        if (!positive) {
+        if (negative) {
             sb.append('-');
         }
         copyInteger(sb);
