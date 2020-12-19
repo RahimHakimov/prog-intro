@@ -63,7 +63,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         } else if (between('0', '9')) {
             return parseConst(false);
         } else {
-            String parsedToken = parseToken();
+            String parsedToken = parseOperationOrValue();
             Operation operation = InformationAboutOperations.STRING_TO_UNARY_OPERATION.get(parsedToken);
             if (operation != null) {
                 return buildUnaryOperation(parseValue(), operation);
@@ -73,7 +73,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
     }
 
 
-    protected String parseToken() {
+    protected String parseOperationOrValue() {
         StringBuilder parsed = new StringBuilder();
         while (between('0', '9') || between('A', 'z')) {
             parsed.append(ch);
