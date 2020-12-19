@@ -68,8 +68,40 @@ public class ExpressionParser extends BaseParser implements expression.exception
             if (operation != null) {
                 return buildUnaryOperation(parseValue(), operation);
             }
-            return getVariable(parsedToken);
+            return parseVariable(parsedToken);
         }
+    }
+
+
+    private MyExpression parseVariable(String variable) throws InvalidVariableException {
+        if (InformationAboutOperations.VARIABLES.contains(variable)) {
+            return new Variable(variable);
+        }
+        throw new InvalidVariableException(variable, getInfo());
+    }
+
+    private MyExpression parseConst(boolean negative) throws ParsingException {
+        final StringBuilder sb = new StringBuilder();
+        if (negative) {
+            sb.append('-');
+        }
+        copyInteger(sb);
+        try {
+            return new Const(Integer.parseInt(sb.toString()));
+        } catch (NumberFormatException e) {
+            throw new IllegalConstException(sb.toString(), getInfo());
+        }
+    }
+
+    private MyExpression buildUnaryOperation(MyExpression expr,
+                                             Operation operation) {
+        switch (operation) {
+            case SQRT:
+                return new CheckedSqrt(expr);
+            case ABS:
+                return new CheckedAbs(expr);
+        }
+        return null;
     }
 
     private Operation getBinaryOperator(int priority) {
@@ -103,34 +135,4 @@ public class ExpressionParser extends BaseParser implements expression.exception
         return null;
     }
 
-    private MyExpression getVariable(String variable) throws InvalidVariableException {
-        if (InformationAboutOperations.VARIABLES.contains(variable)) {
-            return new Variable(variable);
-        }
-        throw new InvalidVariableException(variable, getInfo());
-    }
-
-    private MyExpression parseConst(boolean negative) throws ParsingException {
-        final StringBuilder sb = new StringBuilder();
-        if (negative) {
-            sb.append('-');
-        }
-        copyInteger(sb);
-        try {
-            return new Const(Integer.parseInt(sb.toString()));
-        } catch (NumberFormatException e) {
-            throw new IllegalConstException(sb.toString(), getInfo());
-        }
-    }
-
-    private MyExpression buildUnaryOperation(MyExpression expr,
-                                             Operation operation) {
-        switch (operation) {
-            case SQRT:
-                return new CheckedSqrt(expr);
-            case ABS:
-                return new CheckedAbs(expr);
-        }
-        return null;
-    }
 }

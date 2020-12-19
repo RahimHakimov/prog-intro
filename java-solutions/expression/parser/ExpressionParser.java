@@ -24,16 +24,16 @@ public class ExpressionParser extends BaseParser implements Parser {
 
     public MyExpression parseExpression() {
         skipWhitespace();
-        return parseTerm(0);
+        return parseExpressionPart(0);
     }
 
-    private MyExpression parseTerm(int priority) {
+    private MyExpression parseExpressionPart(int priority) {
         skipWhitespace();
         if (priority == InformationAboutOperations.PRIORITIES.get(Operation.CONST)) {
             return parseValue();
         }
 
-        MyExpression parsed = parseTerm(priority + 1);
+        MyExpression parsed = parseExpressionPart(priority + 1);
 
         while (true) {
             skipWhitespace();
@@ -42,7 +42,7 @@ public class ExpressionParser extends BaseParser implements Parser {
                 return parsed;
             }
             nextChar();
-            parsed = buildOperation(parsed, parseTerm(priority + 1), curOperation);
+            parsed = buildBinaryOperation(parsed, parseExpressionPart(priority + 1), curOperation);
         }
     }
 
@@ -55,18 +55,38 @@ public class ExpressionParser extends BaseParser implements Parser {
         } else if (test('-')) {
             skipWhitespace();
             if (between('0', '9')) {
-                return parseConst(false);
+                return parseConst(true);
             }
             return new Negate(parseValue());
         } else if (between('0', '9')) {
-            return parseConst(true);
+            return parseConst(false);
         } else {
             return parseVariable();
         }
     }
 
-    private MyExpression buildOperation(MyExpression left, MyExpression right,
-                                        Operation oper) {
+    private MyExpression parseVariable() {
+        skipWhitespace();
+        final String variable = Character.toString(ch);
+        nextChar();
+        return new Variable(variable);
+    }
+
+    private MyExpression parseConst(boolean negative) {
+        final StringBuilder sb = new StringBuilder();
+        if (negative) {
+            sb.append('-');
+        }
+        copyInteger(sb);
+        try {
+            return new Const(Integer.parseInt(sb.toString()));
+        } catch (NumberFormatException e) {
+            throw new AssertionError("Invalid number " + sb);
+        }
+    }
+
+    private MyExpression buildBinaryOperation(MyExpression left, MyExpression right,
+                                              Operation oper) {
         switch (oper) {
             case ADD:
                 return new Add(left, right);
@@ -86,23 +106,4 @@ public class ExpressionParser extends BaseParser implements Parser {
         return null;
     }
 
-    private MyExpression parseVariable() {
-        skipWhitespace();
-        final String variable = Character.toString(ch);
-        nextChar();
-        return new Variable(variable);
-    }
-
-    private MyExpression parseConst(boolean positive) {
-        final StringBuilder sb = new StringBuilder();
-        if (!positive) {
-            sb.append('-');
-        }
-        copyInteger(sb);
-        try {
-            return new Const(Integer.parseInt(sb.toString()));
-        } catch (NumberFormatException e) {
-            throw new AssertionError("Invalid number " + sb);
-        }
-    }
 }
