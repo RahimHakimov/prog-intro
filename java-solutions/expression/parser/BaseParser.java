@@ -5,6 +5,7 @@ package expression.parser;
  */
 
 public class BaseParser {
+    protected final char END_OF_SOURCE = '\0';
     protected char ch;
     private ExpressionSource source;
 
@@ -21,7 +22,7 @@ public class BaseParser {
     }
 
     protected void nextChar() {
-        ch = source.hasNext() ? source.next() : '\0';
+        ch = source.hasNext() ? source.next() : END_OF_SOURCE;
     }
 
     protected boolean hasNext() {
@@ -57,14 +58,6 @@ public class BaseParser {
         return from <= ch && ch <= to;
     }
 
-
-    protected void copyDigits(final StringBuilder sb) {
-        while (between('0', '9')) {
-            sb.append(ch);
-            nextChar();
-        }
-    }
-
     protected void copyInteger(final StringBuilder sb) {
         if (test('-')) {
             sb.append('-');
@@ -72,7 +65,10 @@ public class BaseParser {
         if (test('0')) {
             sb.append('0');
         } else if (between('1', '9')) {
-            copyDigits(sb);
+            while (between('0', '9')) {
+                sb.append(ch);
+                nextChar();
+            }
         } else {
             throw error("Invalid number");
         }

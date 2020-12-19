@@ -5,6 +5,7 @@ package expression.exceptions;
  */
 
 public class BaseParser {
+    protected final char END_OF_SOURCE = '\0';
     private final char[] buffer;
     protected char ch;
     private ExpressionSource source;
@@ -27,7 +28,7 @@ public class BaseParser {
             buffer[(head + size) % 2002] = source.next();
             size++;
         }
-        ch = size > 0 ? buffer[head % 2002] : '\0';
+        ch = size > 0 ? buffer[head % 2002] : END_OF_SOURCE;
     }
 
     protected void changeSource(final ExpressionSource source) {
@@ -40,12 +41,14 @@ public class BaseParser {
     }
 
     protected void nextChar() {
-        ch = size > 0 ? buffer[(head + 1) % 2002] : '\0';
         if (size > 0) {
             position++;
             size--;
             head = (head + 1) % 2002;
+            ch = buffer[(head + 1) % 2002];
             bufferUpdate();
+        } else {
+            ch = END_OF_SOURCE;
         }
     }
 
@@ -117,13 +120,6 @@ public class BaseParser {
         return from <= ch && ch <= to;
     }
 
-    protected void copyDigits(final StringBuilder sb) {
-        while (between('0', '9')) {
-            sb.append(ch);
-            nextChar();
-        }
-    }
-
     protected void copyInteger(final StringBuilder sb) throws ParsingException {
         if (test('-')) {
             sb.append('-');
@@ -131,7 +127,10 @@ public class BaseParser {
         if (test('0')) {
             sb.append('0');
         } else if (between('1', '9')) {
-            copyDigits(sb);
+            while (between('0', '9')) {
+                sb.append(ch);
+                nextChar();
+            }
         } else {
             throw error("Invalid number");
         }

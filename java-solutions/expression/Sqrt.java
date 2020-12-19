@@ -11,7 +11,7 @@ public class Sqrt extends UnaryOperation {
 
     @Override
     protected int resultOfOperation(int x) {
-        if (x == 0 || x == 1) {
+        if (x == 1) {
             return x;
         }
         int l = 1;
