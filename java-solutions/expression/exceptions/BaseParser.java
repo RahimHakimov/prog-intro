@@ -64,15 +64,6 @@ public class BaseParser {
         return false;
     }
 
-    protected String parseToken() {
-        StringBuilder parsed = new StringBuilder();
-        while (between('0', '9') || between('A', 'z')) {
-            parsed.append(ch);
-            nextChar();
-        }
-        return parsed.toString();
-    }
-
     protected boolean test(String expected) {
         bufferUpdate();
         if (size >= expected.length()) {

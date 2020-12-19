@@ -73,6 +73,16 @@ public class ExpressionParser extends BaseParser implements expression.exception
     }
 
 
+    protected String parseToken() {
+        StringBuilder parsed = new StringBuilder();
+        while (between('0', '9') || between('A', 'z')) {
+            parsed.append(ch);
+            nextChar();
+        }
+        return parsed.toString();
+    }
+
+
     private MyExpression parseVariable(String variable) throws InvalidVariableException {
         if (InformationAboutOperations.VARIABLES.contains(variable)) {
             return new Variable(variable);
