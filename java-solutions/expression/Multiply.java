@@ -17,7 +17,7 @@ public class Multiply extends BinaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.MUL);
+        return InformationAboutOperations.PRIORITIES.get(Operation.MUL);
     }
 
     @Override

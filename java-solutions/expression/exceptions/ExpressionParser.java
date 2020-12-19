@@ -21,7 +21,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         changeSource(new StringSource(expression));
         MyExpression result = parseExpression();
         if (hasNext() && ch != '\0') {
-            throw new MissingOpeningParenthesis(getInfo());
+            throw new MissingOpenParenthesis(getInfo());
         }
         return result;
     }
@@ -33,7 +33,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private MyExpression parseTerm(int priority) throws ParsingException {
         skipWhitespace();
-        if (priority == Operation.PRIORITIES.get(Operation.CONST)) {
+        if (priority == InformationAboutOperations.PRIORITIES.get(Operation.CONST)) {
             return parseValue();
         }
         MyExpression parsed = parseTerm(priority + 1);
@@ -52,7 +52,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
             MyExpression parsed = parseExpression();
             skipWhitespace();
             if (!expect(')')) {
-                throw new MissingClosingParenthesis(getInfo());
+                throw new MissingCloseParenthesis(getInfo());
             }
             return parsed;
         } else if (test('-')) {
@@ -64,7 +64,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
             return parseConst(true);
         } else {
             String unaryOperationOrVariable = parseToken();
-            Operation operation = Operation.STRING_TO_UNARY_OPERATION.get(unaryOperationOrVariable);
+            Operation operation = InformationAboutOperations.STRING_TO_UNARY_OPERATION.get(unaryOperationOrVariable);
             if (operation != null) {
                 return buildUnaryOperation(parseValue(), operation);
             }
@@ -74,8 +74,8 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private Operation getBinaryOperator(int priority) {
         skipWhitespace();
-        for (Operation operation : Operation.PRIORITY_TO_OPERATION.get(priority)) {
-            if (test(Operation.OPERATORS_STRING.get(operation))) {
+        for (Operation operation : InformationAboutOperations.PRIORITY_TO_OPERATION.get(priority)) {
+            if (test(InformationAboutOperations.OPERATORS_STRING.get(operation))) {
                 return operation;
             }
         }
@@ -104,7 +104,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
     }
 
     private MyExpression getVariable(String token) throws InvalidVariableException {
-        if (Operation.VARIABLES.contains(token)) {
+        if (InformationAboutOperations.VARIABLES.contains(token)) {
             return new Variable(token);
         }
         throw new InvalidVariableException(token, getInfo());

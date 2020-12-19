@@ -17,7 +17,7 @@ public class Subtract extends BinaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.SUB);
+        return InformationAboutOperations.PRIORITIES.get(Operation.SUB);
     }
 
     @Override

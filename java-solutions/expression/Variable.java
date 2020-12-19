@@ -34,7 +34,7 @@ public final class Variable implements MyExpression {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.VAR);
+        return InformationAboutOperations.PRIORITIES.get(Operation.VAR);
     }
 
     @Override

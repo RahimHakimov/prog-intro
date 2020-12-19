@@ -37,7 +37,7 @@ public class Sqrt extends UnaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.SQRT);
+        return InformationAboutOperations.PRIORITIES.get(Operation.SQRT);
     }
 
     @Override

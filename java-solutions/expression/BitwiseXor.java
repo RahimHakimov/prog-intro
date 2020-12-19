@@ -17,7 +17,7 @@ public class BitwiseXor extends BinaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.XOR);
+        return InformationAboutOperations.PRIORITIES.get(Operation.XOR);
     }
 
     @Override

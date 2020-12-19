@@ -29,7 +29,7 @@ public class ExpressionParser extends BaseParser implements Parser {
 
     private MyExpression parseTerm(int priority) {
         skipWhitespace();
-        if (priority == Operation.PRIORITIES.get(Operation.CONST)) {
+        if (priority == InformationAboutOperations.PRIORITIES.get(Operation.CONST)) {
             return parseValue();
         }
 
@@ -37,8 +37,8 @@ public class ExpressionParser extends BaseParser implements Parser {
 
         while (true) {
             skipWhitespace();
-            final Operation curOperation = Operation.CHAR_OPERANDS.get(ch);
-            if (curOperation == null || priority != Operation.PRIORITIES.get(curOperation)) {
+            final Operation curOperation = InformationAboutOperations.CHAR_OPERANDS.get(ch);
+            if (curOperation == null || priority != InformationAboutOperations.PRIORITIES.get(curOperation)) {
                 return parsed;
             }
             nextChar();

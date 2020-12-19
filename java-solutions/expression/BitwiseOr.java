@@ -17,7 +17,7 @@ public class BitwiseOr extends BinaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.OR);
+        return InformationAboutOperations.PRIORITIES.get(Operation.OR);
     }
 
     @Override

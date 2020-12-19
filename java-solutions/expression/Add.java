@@ -17,7 +17,7 @@ public class Add extends BinaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.ADD);
+        return InformationAboutOperations.PRIORITIES.get(Operation.ADD);
     }
 
     @Override

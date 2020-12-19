@@ -21,7 +21,7 @@ public class Abs extends UnaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.ABS);
+        return InformationAboutOperations.PRIORITIES.get(Operation.ABS);
     }
 
     @Override

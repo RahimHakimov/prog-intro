@@ -17,7 +17,7 @@ public class Divide extends BinaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.DIV);
+        return InformationAboutOperations.PRIORITIES.get(Operation.DIV);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class BitwiseAnd extends BinaryOperation {
 
     @Override
     public int getPriority() {
-        return Operation.PRIORITIES.get(Operation.AND);
+        return InformationAboutOperations.PRIORITIES.get(Operation.AND);
     }
 
     @Override
