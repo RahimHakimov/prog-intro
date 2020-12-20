@@ -31,7 +31,7 @@ public class MNKBoard implements Board, Position {
 
     @Override
     public Position getPosition() {
-        return new ProxyPosition(this);
+        return this;
     }
 
     @Override
