@@ -15,13 +15,4 @@ public class BitwiseAnd extends BinaryOperation {
         return x & y;
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.AND);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
-    }
 }

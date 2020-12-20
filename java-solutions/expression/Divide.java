@@ -15,13 +15,4 @@ public class Divide extends BinaryOperation {
         return x / y;
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.DIV);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
-    }
 }

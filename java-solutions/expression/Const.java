@@ -21,17 +21,6 @@ public final class Const implements MyExpression {
         return value;
     }
 
-
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.CONST);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
-    }
-
     @Override
     public String toString() {
         return String.valueOf(value);

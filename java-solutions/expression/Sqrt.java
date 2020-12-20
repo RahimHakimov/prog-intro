@@ -35,14 +35,4 @@ public class Sqrt extends UnaryOperation {
         return "sqrt";
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.SQRT);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
-    }
-
 }

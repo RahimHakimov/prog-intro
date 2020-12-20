@@ -48,13 +48,13 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private MyExpression parseValue() throws ParsingException {
         skipWhitespace();
-        if (expect('-')) {
+        if (between('0', '9')) {
+            return parseConst(false);
+        } else if (expect('-')) {
             if (between('0', '9')) {
                 return parseConst(true);
             }
             return new Negate(parseValue());
-        } else if (between('0', '9')) {
-            return parseConst(false);
         } else if (expect('(')) {
             MyExpression parsed = parseExpression();
             skipWhitespace();

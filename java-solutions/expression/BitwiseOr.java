@@ -15,13 +15,4 @@ public class BitwiseOr extends BinaryOperation {
         return x | y;
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.OR);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
-    }
 }

@@ -19,14 +19,4 @@ public class Negate extends UnaryOperation {
         return "-";
     }
 
-    @Override
-    public int getPriority() {
-        return 100;
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
-    }
-
 }

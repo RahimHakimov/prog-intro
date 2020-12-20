@@ -15,13 +15,4 @@ public class BitwiseXor extends BinaryOperation {
         return x ^ y;
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.XOR);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
-    }
 }

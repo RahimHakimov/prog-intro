@@ -19,14 +19,4 @@ public class Abs extends UnaryOperation {
         return "abs";
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.ABS);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
-    }
-
 }
