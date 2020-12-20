@@ -15,13 +15,4 @@ public class Multiply extends BinaryOperation {
         return x * y;
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.MUL);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
-    }
 }

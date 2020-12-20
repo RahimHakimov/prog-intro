@@ -15,13 +15,4 @@ public class Subtract extends BinaryOperation {
         return x - y;
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.SUB);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return true;
-    }
 }

@@ -33,16 +33,6 @@ public final class Variable implements MyExpression {
     }
 
     @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.VAR);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
-    }
-
-    @Override
     public String toString() {
         return var;
     }

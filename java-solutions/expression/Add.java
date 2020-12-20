@@ -15,13 +15,4 @@ public class Add extends BinaryOperation {
         return x + y;
     }
 
-    @Override
-    public int getPriority() {
-        return InformationAboutOperations.PRIORITIES.get(Operation.ADD);
-    }
-
-    @Override
-    public boolean isValuable() {
-        return false;
-    }
 }
