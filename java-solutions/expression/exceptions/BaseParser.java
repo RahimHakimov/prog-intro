@@ -54,14 +54,10 @@ public class BaseParser {
         return size > 0;
     }
 
-    protected boolean test(char expected) {
-        if (ch == expected) {
-            nextChar();
-            return true;
-        }
-        return false;
+/*    protected boolean test(char expected) {
+        return expect(expected);
     }
-
+*/
     protected boolean expect(final char c) {
         if (ch != c) {
             return false;
@@ -92,10 +88,10 @@ public class BaseParser {
     }
 
     protected void copyInteger(final StringBuilder sb) throws ParsingException {
-        if (test('-')) {
+        if (expect('-')) {
             sb.append('-');
         }
-        if (test('0')) {
+        if (expect('0')) {
             sb.append('0');
         } else if (between('1', '9')) {
             while (between('0', '9')) {
@@ -108,7 +104,7 @@ public class BaseParser {
     }
 
     protected void skipWhitespace() {
-        while (test(' ') || test('\r') || test('\n') || test('\t')) {
+        while (expect(' ') || expect('\r') || expect('\n') || expect('\t')) {
             // skip
         }
     }
