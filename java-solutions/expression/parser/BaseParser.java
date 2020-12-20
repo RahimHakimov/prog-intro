@@ -54,10 +54,6 @@ public class BaseParser {
         return source.error(message);
     }
 
-    protected boolean between(final char from, final char to) {
-        return from <= ch && ch <= to;
-    }
-
     protected void copyInteger(final StringBuilder sb) {
         if (test('-')) {
             sb.append('-');
@@ -72,6 +68,10 @@ public class BaseParser {
         } else {
             throw error("Invalid number");
         }
+    }
+
+    protected boolean between(final char from, final char to) {
+        return from <= ch && ch <= to;
     }
 
     protected void skipWhitespace() {

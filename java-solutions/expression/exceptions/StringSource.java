@@ -29,6 +29,6 @@ public class StringSource implements ExpressionSource {
 
     @Override
     public String partOfSource() {
-        return data.substring(Math.max(pos - 10, 0), Math.min(pos + 5, data.length()));
+        return data.substring(Math.max(pos - 7, 0), Math.min(pos + 2, data.length()));
     }
 }
