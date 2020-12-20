@@ -48,14 +48,14 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private MyExpression parseValue() throws ParsingException {
         skipWhitespace();
-        if (test('(')) {
+        if (expect('(')) {
             MyExpression parsed = parseExpression();
             skipWhitespace();
             if (!expect(')')) {
                 throw new MissingCloseParenthesis(getInfo());
             }
             return parsed;
-        } else if (test('-')) {
+        } else if (expect('-')) {
             if (between('0', '9')) {
                 return parseConst(true);
             }
@@ -121,7 +121,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
             boolean check = true;
             int ind = 0;
             while (ind < operator.length()) {
-                if (!test(operator.charAt(ind))) {
+                if (!expect(operator.charAt(ind))) {
                     check = false;
                     break;
                 }
