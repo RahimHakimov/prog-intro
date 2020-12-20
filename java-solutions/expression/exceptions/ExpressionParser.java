@@ -48,20 +48,20 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private MyExpression parseValue() throws ParsingException {
         skipWhitespace();
-        if (expect('(')) {
-            MyExpression parsed = parseExpression();
-            skipWhitespace();
-            if (!expect(')')) {
-                throw new MissingCloseParenthesis(getInfo());
-            }
-            return parsed;
-        } else if (expect('-')) {
+        if (expect('-')) {
             if (between('0', '9')) {
                 return parseConst(true);
             }
             return new Negate(parseValue());
         } else if (between('0', '9')) {
             return parseConst(false);
+        } else if (expect('(')) {
+            MyExpression parsed = parseExpression();
+            skipWhitespace();
+            if (!expect(')')) {
+                throw new MissingCloseParenthesis(getInfo());
+            }
+            return parsed;
         } else {
             String parsedToken = parseOperationOrValue();
             Operation operation = InformationAboutOperations.STRING_TO_UNARY_OPERATION.get(parsedToken);
@@ -84,10 +84,9 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
 
     private MyExpression parseVariable(String variable) throws InvalidVariableException {
-        if (InformationAboutOperations.VARIABLES.contains(variable)) {
-            return new Variable(variable);
-        }
-        throw new InvalidVariableException(variable, getInfo());
+        if (!InformationAboutOperations.VARIABLES.contains(variable))
+            throw new InvalidVariableException(variable, getInfo());
+        return new Variable(variable);
     }
 
     private MyExpression parseConst(boolean negative) throws ParsingException {
@@ -118,16 +117,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         skipWhitespace();
         for (Operation operation : InformationAboutOperations.PRIORITY_TO_OPERATION.get(priority)) {
             String operator = InformationAboutOperations.OPERATORS_STRING.get(operation);
-            boolean check = true;
-            int ind = 0;
-            while (ind < operator.length()) {
-                if (!expect(operator.charAt(ind))) {
-                    check = false;
-                    break;
-                }
-                ind++;
-            }
-            if (check) {
+            if (expect(operator)) {
                 return operation;
             }
         }

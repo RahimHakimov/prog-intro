@@ -23,11 +23,11 @@ public class BaseParser {
     }
 
     private void bufferUpdate() {
-        while (source.hasNext() && size < 2002) {
+        while (size < 2002 && source.hasNext()) {
             buffer[(head + size) % 2002] = source.next();
             size++;
         }
-        ch = size > 0 ? buffer[head % 2002] : END_OF_SOURCE;
+        ch = size == 0 ? END_OF_SOURCE : buffer[head % 2002];
     }
 
     protected void changeSource(final ExpressionSource source) {
