@@ -36,7 +36,7 @@ public class ExpressionParser extends BaseParser implements Parser {
 
         while (true) {
             skipWhitespace();
-            final Operation curOperation = InformationAboutOperations.CHAR_OPERANDS.get(ch);
+            final Operation curOperation = InformationAboutOperations.CHAR_TO_BINARY_OPERATION.get(ch);
             if (curOperation == null || priority != InformationAboutOperations.PRIORITIES.get(curOperation)) {
                 return parsed;
             }

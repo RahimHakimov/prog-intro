@@ -115,7 +115,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
     private Operation getBinaryOperator(int priority) {
         skipWhitespace();
         for (Operation operation : InformationAboutOperations.PRIORITY_TO_OPERATION.get(priority)) {
-            String operator = InformationAboutOperations.OPERATORS_STRING.get(operation);
+            String operator = InformationAboutOperations.OPERATION_TO_STRING.get(operation);
             boolean check = true;
             for (char c : operator.toCharArray()) {
                 if (!test(c)) {

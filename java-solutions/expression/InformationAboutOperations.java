@@ -9,13 +9,22 @@ import java.util.Set;
  */
 
 public class InformationAboutOperations {
-    public static final Map<Operation, Integer> PRIORITIES = Map.ofEntries(Map.entry(Operation.OR, 0), Map.entry(Operation.XOR, 1), Map.entry(Operation.AND, 2), Map.entry(Operation.ADD, 3), Map.entry(Operation.SUB, 3), Map.entry(Operation.MUL, 4), Map.entry(Operation.DIV, 4), Map.entry(Operation.ABS, 5), Map.entry(Operation.SQRT, 5), Map.entry(Operation.CONST, 6), Map.entry(Operation.VAR, 6));
+    public static final Map<Operation, Integer> PRIORITIES = Map.ofEntries(
+            Map.entry(Operation.OR, 0),
+            Map.entry(Operation.XOR, 1),
+            Map.entry(Operation.AND, 2),
+            Map.entry(Operation.ADD, 3), Map.entry(Operation.SUB, 3),
+            Map.entry(Operation.MUL, 4), Map.entry(Operation.DIV, 4),
+            Map.entry(Operation.ABS, 5), Map.entry(Operation.SQRT, 5),
+            Map.entry(Operation.CONST, 6), Map.entry(Operation.VAR, 6));
 
-    public static final Map<Operation, String> OPERATORS_STRING = Map.ofEntries(
+    public static final Map<Operation, String> OPERATION_TO_STRING = Map.ofEntries(
+            Map.entry(Operation.OR, "|"),
+            Map.entry(Operation.XOR, "^"),
+            Map.entry(Operation.AND, "&"),
             Map.entry(Operation.ADD, "+"), Map.entry(Operation.SUB, "-"),
             Map.entry(Operation.MUL, "*"), Map.entry(Operation.DIV, "/"),
-            Map.entry(Operation.OR, "|"), Map.entry(Operation.XOR, "^"),
-            Map.entry(Operation.AND, "&"), Map.entry(Operation.ABS, "abs"), Map.entry(Operation.SQRT, "sqrt")
+            Map.entry(Operation.ABS, "abs"), Map.entry(Operation.SQRT, "sqrt")
     );
 
     public static final Set<String> VARIABLES = Set.of(
@@ -36,8 +45,10 @@ public class InformationAboutOperations {
             "sqrt", Operation.SQRT, "abs", Operation.ABS
     );
 
-    public static final Map<Character, Operation> CHAR_OPERANDS = Map.of(
-            '&', Operation.AND, '|', Operation.OR, '^', Operation.XOR,
+    public static final Map<Character, Operation> CHAR_TO_BINARY_OPERATION = Map.of(
+            '|', Operation.OR,
+            '^', Operation.XOR,
+            '&', Operation.AND,
             '+', Operation.ADD, '-', Operation.SUB,
             '*', Operation.MUL, '/', Operation.DIV
     );
