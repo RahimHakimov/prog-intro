@@ -18,7 +18,6 @@ public class ExpressionParser extends BaseParser implements Parser {
     @Override
     public TripleExpression parse(String expression) {
         changeSource(new StringSource(expression));
-        nextChar();
         return parseExpression();
     }
 

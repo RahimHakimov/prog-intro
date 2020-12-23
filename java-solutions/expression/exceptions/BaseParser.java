@@ -6,52 +6,37 @@ package expression.exceptions;
 
 public class BaseParser {
     protected final char END_OF_SOURCE = '\0';
-    private final char[] buffer;
     protected char ch;
     private ExpressionSource source;
-    private int head = 0;
-    private int size = 0;
 
     protected BaseParser(final ExpressionSource source) {
         this.source = source;
-        buffer = new char[2002];
-        bufferUpdate();
+        nextChar();
     }
 
     protected BaseParser() {
-        buffer = new char[2002];
-    }
-
-    private void bufferUpdate() {
-        while (size < 2002 && source.hasNext()) {
-            buffer[(head + size) % 2002] = source.next();
-            size++;
-        }
-        ch = size == 0 ? END_OF_SOURCE : buffer[head % 2002];
     }
 
     protected void changeSource(final ExpressionSource source) {
         this.source = source;
 
-        size = 0;
-        head = 0;
-
-        bufferUpdate();
+        nextChar();
     }
 
     protected void nextChar() {
-        if (size > 0) {
-            size--;
-            head = (head + 1) % 2002;
-            ch = buffer[(head + 1) % 2002];
-            bufferUpdate();
-        } else {
-            ch = END_OF_SOURCE;
-        }
+        ch = source.hasNext() ? source.next() : END_OF_SOURCE;
     }
 
     protected boolean hasNext() {
-        return size > 0;
+        return ch != END_OF_SOURCE;
+    }
+
+    protected boolean test(char c) {
+        if (ch != c) {
+            return false;
+        }
+        nextChar();
+        return true;
     }
 
     protected boolean expect(final char excepted) {
@@ -60,19 +45,6 @@ public class BaseParser {
         }
         nextChar();
         return true;
-    }
-
-    protected boolean expect(final String excepted) {
-        for (char c : excepted.toCharArray()) {
-            if (!expect(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    protected String getInfo() {
-        return " Current part: " + source.partOfSource();
     }
 
     protected ParsingException error(final String message) {
@@ -104,4 +76,5 @@ public class BaseParser {
             // skip
         }
     }
+
 }

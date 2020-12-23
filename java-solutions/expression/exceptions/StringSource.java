@@ -27,8 +27,4 @@ public class StringSource implements ExpressionSource {
         return new ParsingException(pos + ": " + message);
     }
 
-    @Override
-    public String partOfSource() {
-        return data.substring(Math.max(pos - 7, 0), Math.min(pos + 2, data.length()));
-    }
 }

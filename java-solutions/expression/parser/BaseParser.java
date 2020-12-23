@@ -11,6 +11,7 @@ public class BaseParser {
 
     protected BaseParser(final ExpressionSource source) {
         this.source = source;
+
         nextChar();
     }
 
@@ -19,6 +20,8 @@ public class BaseParser {
 
     protected void changeSource(final ExpressionSource source) {
         this.source = source;
+
+        nextChar();
     }
 
     protected void nextChar() {
@@ -26,7 +29,7 @@ public class BaseParser {
     }
 
     protected boolean hasNext() {
-        return source.hasNext();
+        return ch != END_OF_SOURCE;
     }
 
     protected boolean test(char expected) {
@@ -42,12 +45,6 @@ public class BaseParser {
             throw error("Expected '" + c + "', found '" + ch + "'");
         }
         nextChar();
-    }
-
-    protected void expect(final String value) {
-        for (char c : value.toCharArray()) {
-            expect(c);
-        }
     }
 
     protected ExpressionException error(final String message) {

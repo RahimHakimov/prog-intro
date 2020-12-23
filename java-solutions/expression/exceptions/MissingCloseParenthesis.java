@@ -5,7 +5,7 @@ package expression.exceptions;
  */
 
 public class MissingCloseParenthesis extends ParsingException {
-    public MissingCloseParenthesis(String message) {
-        super("Source without closing parenthesis. " + message);
+    public MissingCloseParenthesis() {
+        super("Source without closing parenthesis.");
     }
 }

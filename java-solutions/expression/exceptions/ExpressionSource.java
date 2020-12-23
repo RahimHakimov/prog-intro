@@ -11,5 +11,4 @@ public interface ExpressionSource {
 
     ParsingException error(final String message);
 
-    String partOfSource();
 }

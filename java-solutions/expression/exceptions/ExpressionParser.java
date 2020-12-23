@@ -21,7 +21,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         changeSource(new StringSource(expression));
         MyExpression result = parseExpression();
         if (hasNext() && ch != END_OF_SOURCE) {
-            throw new MissingOpenParenthesis(getInfo());
+            throw new MissingOpenParenthesis();
         }
         return result;
     }
@@ -50,16 +50,16 @@ public class ExpressionParser extends BaseParser implements expression.exception
         skipWhitespace();
         if (between('0', '9')) {
             return parseConst(false);
-        } else if (expect('-')) {
+        } else if (test('-')) {
             if (between('0', '9')) {
                 return parseConst(true);
             }
             return new Negate(parseValue());
-        } else if (expect('(')) {
+        } else if (test('(')) {
             MyExpression parsed = parseExpression();
             skipWhitespace();
             if (!expect(')')) {
-                throw new MissingCloseParenthesis(getInfo());
+                throw new MissingCloseParenthesis();
             }
             return parsed;
         } else {
@@ -71,7 +71,6 @@ public class ExpressionParser extends BaseParser implements expression.exception
             return parseVariable(parsedToken);
         }
     }
-
 
     protected String parseOperationOrValue() {
         StringBuilder parsed = new StringBuilder();
@@ -85,7 +84,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private MyExpression parseVariable(String variable) throws InvalidVariableException {
         if (!InformationAboutOperations.VARIABLES.contains(variable))
-            throw new InvalidVariableException(variable, getInfo());
+            throw new InvalidVariableException(variable);
         return new Variable(variable);
     }
 
@@ -98,7 +97,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         try {
             return new Const(Integer.parseInt(sb.toString()));
         } catch (NumberFormatException e) {
-            throw new IllegalConstException(sb.toString(), getInfo());
+            throw new IllegalConstException(sb.toString());
         }
     }
 
@@ -117,9 +116,15 @@ public class ExpressionParser extends BaseParser implements expression.exception
         skipWhitespace();
         for (Operation operation : InformationAboutOperations.PRIORITY_TO_OPERATION.get(priority)) {
             String operator = InformationAboutOperations.OPERATORS_STRING.get(operation);
-            if (expect(operator)) {
-                return operation;
+            boolean check = true;
+            for (char c : operator.toCharArray()) {
+                if (!test(c)) {
+                    check = false;
+                    break;
+                }
             }
+            if (check)
+                return operation;
         }
         return null;
     }
