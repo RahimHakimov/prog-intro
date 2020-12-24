@@ -84,8 +84,8 @@ public class ExpressionParser extends BaseParser implements Parser {
     }
 
     private MyExpression buildBinaryOperation(MyExpression left, MyExpression right,
-                                              Operation oper) {
-        switch (oper) {
+                                              Operation operation) {
+        switch (operation) {
             case ADD:
                 return new Add(left, right);
             case SUB:
