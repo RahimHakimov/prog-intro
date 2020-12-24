@@ -110,11 +110,13 @@ public class ExpressionParser extends BaseParser implements expression.exception
     }
 
 
-    private MyExpression parseVariable(String variable) throws InvalidVariableException {
+    private MyExpression parseVariable(String variable) throws InvalidVariableException, MissedVariableException {
 
         if (OperationsInfo.checkVariable(variable))
             return new Variable(variable);
 
+        if (variable.isEmpty())
+            throw new MissedVariableException(source.getInfo());
         throw new InvalidVariableException(variable);
 
     }

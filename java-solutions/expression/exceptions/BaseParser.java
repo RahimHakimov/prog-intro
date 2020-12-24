@@ -7,7 +7,7 @@ package expression.exceptions;
 public class BaseParser {
     protected final char END_OF_SOURCE = '\0';
     protected char ch;
-    private ExpressionSource source;
+    protected ExpressionSource source;
 
     protected BaseParser(final ExpressionSource source) {
         this.source = source;
