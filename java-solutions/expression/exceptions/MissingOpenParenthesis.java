@@ -5,7 +5,7 @@ package expression.exceptions;
  */
 
 public class MissingOpenParenthesis extends ParsingException {
-    public MissingOpenParenthesis() {
-        super("Closing parentheses without opening. ");
+    public MissingOpenParenthesis(String info) {
+        super("Closing parentheses without opening. There:"+info);
     }
 }

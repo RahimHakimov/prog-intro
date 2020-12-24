@@ -29,7 +29,7 @@ public class StringSource implements ExpressionSource {
 
     @Override
     public String getInfo() {
-        StringBuilder result = new StringBuilder().append("\n=================\n")
+        StringBuilder result = new StringBuilder().append("\n\n=================\n")
                 .append(data.substring(Math.max(0, pos - 5), Math.min(pos + 5, data.length())) + "\n");
         for (int i = 0; i < Math.max(0, pos) - 2; ++i) {
             result.append(" ");

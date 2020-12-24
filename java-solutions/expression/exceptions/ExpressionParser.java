@@ -29,7 +29,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
         if (!hasNext())
             return result;
 
-        throw new MissingOpenParenthesis();
+        throw new MissingOpenParenthesis(source.getInfo());
     }
 
     public MyExpression parseExpression() throws ParsingException {
@@ -76,7 +76,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
             skipWhitespace();
 
             if (!expect(')'))
-                throw new MissingCloseParenthesis();
+                throw new MissingCloseParenthesis(source.getInfo());
 
             return parsed;
         } else {
