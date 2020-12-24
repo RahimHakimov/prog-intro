@@ -24,12 +24,17 @@ public class StringSource implements ExpressionSource {
 
     @Override
     public ParsingException error(final String message) {
-        return new ParsingException(pos+ ": " + message);
+        return new ParsingException(pos + ": " + message);
     }
 
     @Override
     public String getInfo() {
-        return data.substring(Math.max(0, pos-5), Math.min(pos+5, data.length()));
+        StringBuilder result = new StringBuilder().append("\n" + data.substring(Math.max(0, pos - 5), Math.min(pos + 5, data.length())) + "\n");
+        for (int i = 0; i < Math.max(0, pos) - 2; ++i) {
+            result.append(" ");
+        }
+        result.append("^");
+        return result.toString();
     }
 
 }

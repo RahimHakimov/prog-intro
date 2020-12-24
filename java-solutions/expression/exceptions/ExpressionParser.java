@@ -117,7 +117,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
         if (variable.isEmpty())
             throw new MissedVariableException(source.getInfo());
-        throw new InvalidVariableException(variable);
+        throw new InvalidVariableException(variable, source.getInfo());
 
     }
 

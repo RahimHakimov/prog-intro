@@ -5,7 +5,7 @@ package expression.exceptions;
  */
 
 public class InvalidVariableException extends ParsingException {
-    public InvalidVariableException(String variable) {
-        super("Invalid variable: " + variable);
+    public InvalidVariableException(String variable, String fromSource) {
+        super("Invalid variable: " + variable + " " + fromSource);
     }
 }
