@@ -2,11 +2,40 @@ package expression.exceptions;
 
 import expression.*;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
 public class ExpressionParser extends BaseParser implements expression.exceptions.Parser {
+
+    private static final List<List<Operation>> PRIORITY_TO_OPERATION = List.of(
+            List.of(Operation.OR),
+            List.of(Operation.XOR),
+            List.of(Operation.AND),
+            List.of(Operation.ADD, Operation.SUB),
+            List.of(Operation.MUL, Operation.DIV),
+            List.of(Operation.CONST, Operation.VAR)
+    );
+
+    private static final Map<Operation, String> OPERATION_TO_STRING = Map.of(
+            Operation.OR, "|",
+            Operation.XOR, "^",
+            Operation.AND, "&",
+            Operation.ADD, "+", Operation.SUB, "-",
+            Operation.MUL, "*", Operation.DIV, "/"
+    );
+
+    private static final Set<String> VARIABLES = Set.of(
+            "x", "y", "z"
+    );
+
+    private static final Map<String, Operation> STRING_TO_UNARY_OPERATION = Map.of(
+            "sqrt", Operation.SQRT, "abs", Operation.ABS
+    );
 
     public ExpressionParser(StringSource stringSource) {
         super(stringSource);
@@ -33,7 +62,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private MyExpression parseExpressionPart(int priority) throws ParsingException {
         skipWhitespace();
-        if (priority == InformationAboutOperations.PRIORITIES.get(Operation.CONST)) {
+        if (priority == PriorityOfOperations.PRIORITIES.get(Operation.CONST)) {
             return parseValue();
         }
         MyExpression parsed = parseExpressionPart(priority + 1);
@@ -64,7 +93,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
             return parsed;
         } else {
             String parsedToken = parseOperationOrValue();
-            Operation operation = InformationAboutOperations.STRING_TO_UNARY_OPERATION.get(parsedToken);
+            Operation operation = STRING_TO_UNARY_OPERATION.get(parsedToken);
             if (operation != null) {
                 return buildUnaryOperation(parseValue(), operation);
             }
@@ -83,7 +112,7 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
 
     private MyExpression parseVariable(String variable) throws InvalidVariableException {
-        if (!InformationAboutOperations.VARIABLES.contains(variable))
+        if (!VARIABLES.contains(variable))
             throw new InvalidVariableException(variable);
         return new Variable(variable);
     }
@@ -114,8 +143,8 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     private Operation getBinaryOperator(int priority) {
         skipWhitespace();
-        for (Operation operation : InformationAboutOperations.PRIORITY_TO_OPERATION.get(priority)) {
-            String operator = InformationAboutOperations.OPERATION_TO_STRING.get(operation);
+        for (Operation operation : PRIORITY_TO_OPERATION.get(priority)) {
+            String operator = OPERATION_TO_STRING.get(operation);
             boolean check = true;
             for (char c : operator.toCharArray()) {
                 if (!test(c)) {
