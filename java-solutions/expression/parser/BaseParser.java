@@ -41,9 +41,9 @@ public class BaseParser {
     }
 
     protected void expect(final char c) {
-        if (ch != c) {
+        if (ch != c)
             throw error("Expected '" + c + "', found '" + ch + "'");
-        }
+
         nextChar();
     }
 
@@ -52,19 +52,21 @@ public class BaseParser {
     }
 
     protected void copyInteger(final StringBuilder sb) {
-        if (test('-')) {
+        if (test('-'))
             sb.append('-');
-        }
-        if (test('0')) {
+
+        if (test('0'))
             sb.append('0');
-        } else if (between('1', '9')) {
+        else if (between('1', '9')) {
+
             while (between('0', '9')) {
                 sb.append(ch);
                 nextChar();
             }
-        } else {
+
+        } else
             throw error("Invalid number");
-        }
+
     }
 
     protected boolean between(final char from, final char to) {
