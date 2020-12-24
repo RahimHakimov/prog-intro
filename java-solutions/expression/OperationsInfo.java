@@ -60,24 +60,24 @@ public class OperationsInfo {
         }
     }
 
-    public static String getBinaryOperator(Operation operation) {
+    public static char getBinaryOperator(Operation operation) {
         switch (operation) {
             case OR:
-                return "|";
+                return '|';
             case XOR:
-                return "^";
+                return '^';
             case AND:
-                return "&";
+                return '&';
             case ADD:
-                return "+";
+                return '+';
             case SUB:
-                return "-";
+                return '-';
             case MUL:
-                return "*";
+                return '*';
             case DIV:
-                return "/";
+                return '/';
             default:
-                return null;
+                return '\0';
         }
     }
 
