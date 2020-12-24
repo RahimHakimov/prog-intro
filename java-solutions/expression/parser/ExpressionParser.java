@@ -2,21 +2,11 @@ package expression.parser;
 
 import expression.*;
 
-import java.util.Map;
-
 /**
  * @author Rakhim Khakimov (ramhakimov@niuitmo.ru)
  */
 
 public class ExpressionParser extends BaseParser implements Parser {
-
-    private static final Map<Character, Operation> CHAR_TO_BINARY_OPERATION = Map.of(
-            '|', Operation.OR,
-            '^', Operation.XOR,
-            '&', Operation.AND,
-            '+', Operation.ADD, '-', Operation.SUB,
-            '*', Operation.MUL, '/', Operation.DIV
-    );
 
     public ExpressionParser(StringSource stringSource) {
         super(stringSource);
@@ -39,19 +29,17 @@ public class ExpressionParser extends BaseParser implements Parser {
 
     private MyExpression parseExpressionPart(int priority) {
         skipWhitespace();
-        if (priority == PriorityOfOperations.PRIORITIES.get(Operation.CONST)) {
+        if (priority == OperationsInfo.getPriority(Operation.CONST)) {
             return parseValue();
         }
 
         MyExpression parsed = parseExpressionPart(priority + 1);
 
         while (true) {
-            skipWhitespace();
-            final Operation curOperation = CHAR_TO_BINARY_OPERATION.get(ch);
-            if (curOperation == null || priority != PriorityOfOperations.PRIORITIES.get(curOperation)) {
+            Operation curOperation = getBinaryOperator(priority);
+            if (curOperation == null) {
                 return parsed;
             }
-            nextChar();
             parsed = buildBinaryOperation(parsed, parseExpressionPart(priority + 1), curOperation);
         }
     }
@@ -112,6 +100,23 @@ public class ExpressionParser extends BaseParser implements Parser {
                 return new BitwiseXor(left, right);
             case OR:
                 return new BitwiseOr(left, right);
+        }
+        return null;
+    }
+
+    private Operation getBinaryOperator(int priority) {
+        skipWhitespace();
+        for (Operation operation : OperationsInfo.getOperationFromPriority(priority)) {
+            String operator = OperationsInfo.getBinaryOperator(operation);
+            boolean check = true;
+            for (char c : operator.toCharArray()) {
+                if (!test(c)) {
+                    check = false;
+                    break;
+                }
+            }
+            if (check)
+                return operation;
         }
         return null;
     }
