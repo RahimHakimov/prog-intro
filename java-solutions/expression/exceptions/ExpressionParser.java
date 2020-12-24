@@ -8,6 +8,9 @@ import expression.*;
 
 public class ExpressionParser extends BaseParser implements expression.exceptions.Parser {
 
+    private final int start = OperationsInfo.getStartPriority();
+    private final int step = OperationsInfo.getStep();
+
     public ExpressionParser(StringSource stringSource) {
         super(stringSource);
     }
@@ -18,106 +21,131 @@ public class ExpressionParser extends BaseParser implements expression.exception
 
     @Override
     public MyExpression parse(String expression) throws ParsingException {
+
         changeSource(new StringSource(expression));
+
         MyExpression result = parseExpression();
-        if (hasNext() && ch != END_OF_SOURCE) {
-            throw new MissingOpenParenthesis();
-        }
-        return result;
+
+        if (!hasNext())
+            return result;
+
+        throw new MissingOpenParenthesis();
     }
 
     public MyExpression parseExpression() throws ParsingException {
+
         skipWhitespace();
-        return parseExpressionPart(0);
+
+        return parseExpressionPart(start);
     }
 
     private MyExpression parseExpressionPart(int priority) throws ParsingException {
+
         skipWhitespace();
-        if (priority == OperationsInfo.getPriority(Operation.CONST)) {
+
+        if (priority == OperationsInfo.getPriority(Operation.VAR))
             return parseValue();
-        }
-        MyExpression parsed = parseExpressionPart(priority + 1);
+
+        MyExpression parsed = parseExpressionPart(priority + step);
+
         while (true) {
             Operation curOperation = getBinaryOperator(priority);
-            if (curOperation == null) {
+
+            if (curOperation == null)
                 return parsed;
-            }
-            parsed = buildBinaryOperation(parsed, parseExpressionPart(priority + 1), curOperation);
+
+            parsed = buildBinaryOperation(parsed, parseExpressionPart(priority + step), curOperation);
         }
     }
 
     private MyExpression parseValue() throws ParsingException {
+
         skipWhitespace();
-        if (between('0', '9')) {
+
+        if (between('0', '9'))
             return parseConst(false);
-        } else if (test('-')) {
-            if (between('0', '9')) {
+        else if (test('-')) {
+
+            if (between('0', '9'))
                 return parseConst(true);
-            }
+
             return new Negate(parseValue());
         } else if (test('(')) {
+
             MyExpression parsed = parseExpression();
             skipWhitespace();
-            if (!expect(')')) {
+
+            if (!expect(')'))
                 throw new MissingCloseParenthesis();
-            }
+
             return parsed;
         } else {
-            String parsedToken = parseOperationOrValue();
-            Operation operation = OperationsInfo.getUnaryOperation(parsedToken);
-            if (operation != null) {
-                return buildUnaryOperation(parseValue(), operation);
-            }
-            return parseVariable(parsedToken);
+
+            String parsed = parseOperationOrValue();
+            Operation operation = OperationsInfo.getUnaryOperation(parsed);
+
+            if (operation != null)
+                switch (operation) {
+                    case SQRT:
+                        return new CheckedSqrt(parseValue());
+                    case ABS:
+                        return new CheckedAbs(parseValue());
+                }
+
+            return parseVariable(parsed);
+
         }
     }
 
     protected String parseOperationOrValue() {
+
         StringBuilder parsed = new StringBuilder();
+
         while (between('0', '9') || between('A', 'z')) {
             parsed.append(ch);
             nextChar();
         }
+
         return parsed.toString();
     }
 
 
     private MyExpression parseVariable(String variable) throws InvalidVariableException {
+
         if (OperationsInfo.checkVariable(variable))
             return new Variable(variable);
+
         throw new InvalidVariableException(variable);
+
     }
 
     private MyExpression parseConst(boolean negative) throws ParsingException {
+
         final StringBuilder sb = new StringBuilder();
-        if (negative) {
+
+        if (negative)
             sb.append('-');
-        }
+
         copyInteger(sb);
+
         try {
             return new Const(Integer.parseInt(sb.toString()));
         } catch (NumberFormatException e) {
             throw new IllegalConstException(sb.toString());
         }
-    }
 
-    private MyExpression buildUnaryOperation(MyExpression expr,
-                                             Operation operation) {
-        switch (operation) {
-            case SQRT:
-                return new CheckedSqrt(expr);
-            case ABS:
-                return new CheckedAbs(expr);
-        }
-        return null;
     }
 
     private Operation getBinaryOperator(int priority) {
         skipWhitespace();
+
         for (Operation operation : OperationsInfo.getOperationFromPriority(priority)) {
+
             char operator = OperationsInfo.getBinaryOperator(operation);
+
             if (test(operator))
                 return operation;
+
         }
         return null;
     }

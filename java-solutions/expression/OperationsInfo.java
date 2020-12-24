@@ -8,25 +8,33 @@ import java.util.List;
 
 public class OperationsInfo {
 
+    public static int getStartPriority() {
+        return 5;
+    }
+
+    public static int getStep() {
+        return -1;
+    }
+
     public static int getPriority(Operation operation) {
         switch (operation) {
             case OR:
-                return 0;
+                return 5;
             case XOR:
-                return 1;
+                return 4;
             case AND:
-                return 2;
+                return 3;
             case ADD:
             case SUB:
-                return 3;
+                return 2;
             case MUL:
             case DIV:
-                return 4;
+                return 1;
             case SQRT:
             case ABS:
             case VAR:
             case CONST:
-                return 5;
+                return 0;
             default:
                 return -1;
         }
@@ -45,15 +53,15 @@ public class OperationsInfo {
 
     public static List<Operation> getOperationFromPriority(int priority) {
         switch (priority) {
-            case 0:
+            case 5:
                 return List.of(Operation.OR);
-            case 1:
-                return List.of(Operation.XOR);
-            case 2:
-                return List.of(Operation.AND);
-            case 3:
-                return List.of(Operation.ADD, Operation.SUB);
             case 4:
+                return List.of(Operation.XOR);
+            case 3:
+                return List.of(Operation.AND);
+            case 2:
+                return List.of(Operation.ADD, Operation.SUB);
+            case 1:
                 return List.of(Operation.MUL, Operation.DIV);
             default:
                 return null;

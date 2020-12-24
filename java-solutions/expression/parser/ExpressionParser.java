@@ -8,6 +8,9 @@ import expression.*;
 
 public class ExpressionParser extends BaseParser implements Parser {
 
+    private final int start = OperationsInfo.getStartPriority();
+    private final int step = OperationsInfo.getStep();
+
     public ExpressionParser(StringSource stringSource) {
         super(stringSource);
     }
@@ -18,70 +21,99 @@ public class ExpressionParser extends BaseParser implements Parser {
 
     @Override
     public TripleExpression parse(String expression) {
+
         changeSource(new StringSource(expression));
+
         return parseExpression();
     }
 
     public MyExpression parseExpression() {
+
         skipWhitespace();
-        return parseExpressionPart(0);
+
+        return parseExpressionPart(start);
     }
 
     private MyExpression parseExpressionPart(int priority) {
-        skipWhitespace();
-        if (priority == OperationsInfo.getPriority(Operation.CONST)) {
-            return parseValue();
-        }
 
-        MyExpression parsed = parseExpressionPart(priority + 1);
+        skipWhitespace();
+
+        if (priority == OperationsInfo.getPriority(Operation.CONST))
+            return parseValue();
+
+        MyExpression parsed = parseExpressionPart(priority + step);
 
         while (true) {
             Operation curOperation = getBinaryOperator(priority);
-            if (curOperation == null) {
+
+            if (curOperation == null)
                 return parsed;
-            }
-            parsed = buildBinaryOperation(parsed, parseExpressionPart(priority + 1), curOperation);
+
+            parsed = buildBinaryOperation(parsed, parseExpressionPart(priority + step), curOperation);
         }
     }
 
     private MyExpression parseValue() {
-        if (test('(')) {
+
+        skipWhitespace();
+
+        if (between('0', '9'))
+            return parseConst(false);
+        else if (test('-')) {
+
+            if (between('0', '9'))
+                return parseConst(true);
+
+            return new Negate(parseValue());
+        } else if (test('(')) {
+
             MyExpression parsed = parseExpression();
             skipWhitespace();
+
             expect(')');
+
             return parsed;
-        } else if (test('-')) {
-            skipWhitespace();
-            if (between('0', '9')) {
-                return parseConst(true);
-            }
-            return new Negate(parseValue());
-        } else if (between('0', '9')) {
-            return parseConst(false);
-        } else {
+        } else
             return parseVariable();
-        }
     }
 
     private MyExpression parseVariable() {
+
         skipWhitespace();
+
         final String variable = Character.toString(ch);
         nextChar();
+
         return new Variable(variable);
     }
 
     private MyExpression parseConst(boolean negative) {
         final StringBuilder sb = new StringBuilder();
-        if (negative) {
+
+        if (negative)
             sb.append('-');
-        }
+
         copyInteger(sb);
+
         try {
             return new Const(Integer.parseInt(sb.toString()));
         } catch (NumberFormatException e) {
             throw new AssertionError("Invalid number " + sb);
         }
     }
+
+    private Operation getBinaryOperator(int priority) {
+
+        skipWhitespace();
+
+        for (Operation operation : OperationsInfo.getOperationFromPriority(priority)) {
+            char operator = OperationsInfo.getBinaryOperator(operation);
+            if (test(operator))
+                return operation;
+        }
+        return null;
+    }
+
 
     private MyExpression buildBinaryOperation(MyExpression left, MyExpression right,
                                               Operation operation) {
@@ -100,16 +132,6 @@ public class ExpressionParser extends BaseParser implements Parser {
                 return new BitwiseXor(left, right);
             case OR:
                 return new BitwiseOr(left, right);
-        }
-        return null;
-    }
-
-    private Operation getBinaryOperator(int priority) {
-        skipWhitespace();
-        for (Operation operation : OperationsInfo.getOperationFromPriority(priority)) {
-            char operator = OperationsInfo.getBinaryOperator(operation);
-            if (test(operator))
-                return operation;
         }
         return null;
     }
